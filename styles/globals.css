@@ -18,7 +18,7 @@ html {
 }
 
 body {
-  background-image: url("/public/background.svg");
+  background-image: url("../public/background.svg");
   background-repeat: no-repeat;
   background-position: center bottom;
   background-size: 80%;
@@ -29,6 +29,10 @@ body {
   justify-content: center;
   height: 100%;
   min-height: 100%;
+}
+
+#__next {
+  width: 100%;
 }
 
 .title {
@@ -53,6 +57,7 @@ nav {
   margin-top: 5rem;
   margin-bottom: 3rem;
   display: flex;
+  justify-content: center;
 }
 
 .page-button {
@@ -83,6 +88,7 @@ nav {
 .main-page {
   display: none;
   animation: tabSwitch 500ms;
+  margin: 0 auto;
 }
 .main-page.active-page {
   display: block;
@@ -146,13 +152,13 @@ nav {
   flex-direction: row;
 }
 
-.book-segment {
+.books-status-section {
   display: inline;
   width: 15%;
   margin: 0 3rem;
   animation: deactivateSegment 300ms;
 }
-.book-segment h2 {
+.books-status-section h2 {
   font-size: 1.7rem;
   font-weight: 500;
   border-bottom: 1px solid #000;
@@ -160,30 +166,30 @@ nav {
   padding-bottom: 0.8rem;
   cursor: pointer;
 }
-.book-segment .book-buttons {
+.books-status-section .book-buttons {
   display: none;
 }
-.book-segment .book-inner {
+.books-status-section .book-inner {
   display: flex;
   align-items: center;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.book-segment.active-book-segment {
+.books-status-section.active {
   width: 70%;
   animation: activateSegment 300ms;
 }
-.book-segment.active-book-segment .book-inner {
+.books-status-section.active .book-inner {
   overflow: visible;
   text-overflow: clip;
   white-space: normal;
 }
-.book-segment.active-book-segment h2 {
+.books-status-section.active h2 {
   color: #ff9463;
   border-bottom: 3px solid #ff9463;
 }
-.book-segment.active-book-segment .book-buttons {
+.books-status-section.active .book-buttons {
   display: flex;
 }
 
@@ -331,32 +337,32 @@ footer a {
     width: 100%;
     flex-direction: column;
   }
-  .book-segment {
+  .books-status-section {
     display: inline;
     width: 90%;
     animation: none;
     margin: 2rem auto;
   }
-  .book-segment.active-book-segment {
+  .books-status-section.active {
     width: 90%;
     animation: none;
   }
-  .book-segment.active-book-segment .book-inner {
+  .books-status-section.active .book-inner {
     overflow: visible;
     text-overflow: clip;
     white-space: normal;
   }
-  .book-segment .book-title {
+  .books-status-section .book-title {
     font-size: 1rem;
   }
-  .book-segment .book-inner {
+  .books-status-section .book-inner {
     display: flex;
     align-items: center;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-  .book-segment h2 {
+  .books-status-section h2 {
     font-size: 1.2rem;
   }
   .switch-left-button {

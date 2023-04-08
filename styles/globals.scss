@@ -143,28 +143,22 @@ nav {
   margin: 2rem auto;
 }
 
-.to-read .switch-left-button {
-  display: none;
-}
-
-.finished .switch-right-button {
-  display: none;
-}
-
 .book-page {
   margin-top: 3rem;
+  width: 100%;
+  flex-direction: column;
+  gap: 4rem;
+  align-items: center;
   &.active-page {
-    width: 75%;
     display: flex;
-    flex-direction: row;
   }
 }
 
 .books-status-section {
   display: inline;
-  width: 15%;
+  width: 60%;
   margin: 0 3rem;
-  animation: deactivateSegment 300ms;
+  // animation: deactivateSegment 300ms;
 
   h2 {
     font-size: 1.7rem;
@@ -173,10 +167,6 @@ nav {
     padding-left: 1.2rem;
     padding-bottom: 0.8rem;
     cursor: pointer;
-  }
-
-  .book-buttons {
-    display: none;
   }
 
   .book-inner {
@@ -188,8 +178,7 @@ nav {
   }
 
   &.active {
-    width: 70%;
-    animation: activateSegment 300ms;
+    // animation: activateSegment 300ms;
     .book-inner {
       overflow: visible;
       text-overflow: clip;
@@ -200,9 +189,17 @@ nav {
       color: $orange;
       border-bottom: 3px solid $orange;
     }
+  }
 
-    .book-buttons {
-      display: flex;
+  &.to-read{
+    .switch-up-button {
+      display: none;
+    }
+  }
+
+  &.finished{
+    .switch-down-button {
+      display: none;
     }
   }
 }
@@ -230,9 +227,12 @@ nav {
   font-size: 0.8rem;
 }
 
-.book-buttons i {
-  margin: 0 0.5rem;
-  cursor: pointer;
+.book-buttons{
+  display: flex;
+  i {
+    margin: 0 0.5rem;
+    cursor: pointer;
+  }
 }
 
 .book-details {

@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import Script from 'next/script'
-import { useState, MouseEventHandler, ReactElement, ReactComponentElement } from 'react';
+import { useState, MouseEventHandler } from 'react';
 import { getBookJson, getAuthor } from './api/openlibrary';
 import BookElement from './BookElement';
 import BookAddForm from './BookAddForm';
@@ -50,7 +50,7 @@ function Tabs(){
     title: `Harry Potter and the Philosopher's Stone`,
     author: `J. K. Rowling`,
     publisher: 'Bloomsbury',
-    isbn:'333',
+    isbn: 9781408855652,
     status:'to-read',
   },
   {
@@ -156,12 +156,14 @@ function Tabs(){
       status: status
      }];
     setBookList(newBookList);
+
+    addForm.reset();
   }
 
   function handleSearchClick(e:any){
     e.preventDefault();
 
-    const searchForm = e.target.parentNode.form
+    const searchForm = e.target.parentNode.form;
     const formData = new FormData(searchForm);
     const formJson = Object.fromEntries(formData.entries());
 
@@ -199,6 +201,7 @@ function Tabs(){
       console.log(err);
     });
 
+    searchForm.reset();
   }
 
   const [activeTab, setActiveTab] = useState('');
@@ -252,12 +255,15 @@ function BooksStatusSection({sectionActiveStatus, children, section, onSectionCl
 function BooksTab({className, bookList}: {className: string, bookList: any}){
   const [activeSection, setActiveSection] = useState('');
 
-  if (activeSection === ''){
-    setActiveSection('to-read');
-  }
 
   function handleSectionClick(e:any){
-    setActiveSection(e.target.id)
+    const clickedSection = e.target.id;
+    if (clickedSection === activeSection){
+      setActiveSection('');
+    } else {
+      setActiveSection(clickedSection)
+    }
+
   }
 
   return(

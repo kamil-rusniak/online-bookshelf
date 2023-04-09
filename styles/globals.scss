@@ -94,7 +94,7 @@ nav {
   margin: 0 auto;
 
   &.active-page {
-    display: block;
+    display: flex;
   }
 }
 
@@ -102,6 +102,7 @@ nav {
   font-size: 2rem;
   text-align: left;
   width: 60%;
+  flex-direction: column;
 
   .input-wrapper {
     margin-top: 2rem;
@@ -149,16 +150,15 @@ nav {
   flex-direction: column;
   gap: 4rem;
   align-items: center;
-  &.active-page {
-    display: flex;
-  }
 }
 
 .books-status-section {
   display: inline;
   width: 60%;
   margin: 0 3rem;
-  // animation: deactivateSegment 300ms;
+  overflow: hidden;
+  max-height: 210px;
+  transition: max-height 0.15s ease-out;
 
   h2 {
     font-size: 1.7rem;
@@ -178,14 +178,15 @@ nav {
   }
 
   &.active {
-    // animation: activateSegment 300ms;
+    max-height: 999px;
+    transition: max-height 0.25s ease-in;
     .book-inner {
       overflow: visible;
       text-overflow: clip;
       white-space: normal;
     }
 
-    h2 {
+    .segment-button {
       color: $orange;
       border-bottom: 3px solid $orange;
     }
@@ -246,6 +247,10 @@ nav {
   overflow: auto; /* Enable scroll if needed */
   background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 
+  &.active{
+    display: block;
+  }
+
   /* Modal Content/Box */
   &-content {
     background-color: #fff6f1;
@@ -294,8 +299,15 @@ nav {
     align-items: center;
   }
 
-  img {
+  .book-image{
+    position: relative;
     max-width: 400px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    img{
+      position: relative!important;
+    }
   }
 
   &-close {
@@ -339,29 +351,11 @@ footer {
 @keyframes tabSwitch {
   from {
     opacity: 0;
+    visibility: hidden;
   }
   to {
+    visibility: visible;
     opacity: 1;
-  }
-}
-
-@keyframes activateSegment {
-  from {
-    width: 15%;
-  }
-
-  to {
-    width: 70%;
-  }
-}
-
-@keyframes deactivateSegment {
-  from {
-    width: 70%;
-  }
-
-  to {
-    width: 15%;
   }
 }
 

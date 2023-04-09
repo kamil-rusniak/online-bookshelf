@@ -91,13 +91,14 @@ nav {
   margin: 0 auto;
 }
 .main-page.active-page {
-  display: block;
+  display: flex;
 }
 
 .adding-page {
   font-size: 2rem;
   text-align: left;
   width: 60%;
+  flex-direction: column;
 }
 .adding-page .input-wrapper {
   margin-top: 2rem;
@@ -142,14 +143,14 @@ nav {
   gap: 4rem;
   align-items: center;
 }
-.book-page.active-page {
-  display: flex;
-}
 
 .books-status-section {
   display: inline;
   width: 60%;
   margin: 0 3rem;
+  overflow: hidden;
+  max-height: 210px;
+  transition: max-height 0.15s ease-out;
 }
 .books-status-section h2 {
   font-size: 1.7rem;
@@ -166,12 +167,16 @@ nav {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.books-status-section.active {
+  max-height: 999px;
+  transition: max-height 0.25s ease-in;
+}
 .books-status-section.active .book-inner {
   overflow: visible;
   text-overflow: clip;
   white-space: normal;
 }
-.books-status-section.active h2 {
+.books-status-section.active .segment-button {
   color: #ff9463;
   border-bottom: 3px solid #ff9463;
 }
@@ -224,6 +229,9 @@ nav {
   background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
   /* Modal Content/Box */
 }
+.book-details.active {
+  display: block;
+}
 .book-details-content {
   background-color: #fff6f1;
   margin: 5% auto;
@@ -264,8 +272,15 @@ nav {
   flex-direction: row;
   align-items: center;
 }
-.book-details img {
+.book-details .book-image {
+  position: relative;
   max-width: 400px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+.book-details .book-image img {
+  position: relative !important;
 }
 .book-details-close {
   color: #aaa;
@@ -304,25 +319,11 @@ footer a {
 @keyframes tabSwitch {
   from {
     opacity: 0;
+    visibility: hidden;
   }
   to {
+    visibility: visible;
     opacity: 1;
-  }
-}
-@keyframes activateSegment {
-  from {
-    width: 15%;
-  }
-  to {
-    width: 70%;
-  }
-}
-@keyframes deactivateSegment {
-  from {
-    width: 70%;
-  }
-  to {
-    width: 15%;
   }
 }
 @media (max-width: 1200px) {

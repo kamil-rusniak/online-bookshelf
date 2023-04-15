@@ -1,7 +1,8 @@
 import Image from 'next/image';
+import { Dispatch, SetStateAction } from 'react';
 
 
-export default function BookDetailsWindow({title, author, publisher, isbn, showDetails, setShowDetails}:{title:string, author:string, publisher: string, isbn: number, showDetails:any, setShowDetails:any}){
+export default function BookDetailsWindow({title, author, publisher, isbn, showDetails, setShowDetails}:{title:string, author:string, publisher: string, isbn: number, showDetails:boolean, setShowDetails:Dispatch<SetStateAction<boolean>>}){
 
   function handleClose(e:React.MouseEvent<Element, MouseEvent>){
     const target = e.target as Element;

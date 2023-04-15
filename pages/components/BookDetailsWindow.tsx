@@ -3,8 +3,9 @@ import Image from 'next/image';
 
 export default function BookDetailsWindow({title, author, publisher, isbn, showDetails, setShowDetails}:{title:string, author:string, publisher: string, isbn: number, showDetails:any, setShowDetails:any}){
 
-  function handleClose(e:any){
-      if (e.target.classList.contains('book-details-close') || e.target.classList.contains('book-details', 'active')){
+  function handleClose(e:React.MouseEvent<Element, MouseEvent>){
+    const target = e.target as Element;
+      if (target.classList.contains('book-details-close') || (target.classList.contains('book-details') &&  target.classList.contains('active'))){
         setShowDetails(false);
       }
   }

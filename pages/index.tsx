@@ -94,7 +94,7 @@ function Tabs(){
       isbn={book.isbn} 
       publisher={book.publisher} 
       status={book.status} 
-      onSwitch={(e:any) => handleSwitch(e, book.id)} 
+      onSwitch={(e:MouseEvent) => handleSwitch(e, book.id)} 
       onDelete={() => handleDelete(book.id)}
     />
   );
@@ -134,10 +134,11 @@ function Tabs(){
   }
 
 
-  function handleAddClick(e:any){
+  function handleAddClick(e:React.MouseEvent<Element, MouseEvent>){
     e.preventDefault();
     
-    const addForm = e.target.form;
+    const target = e.target as Element;
+    const addForm = (target as HTMLFormElement).form;
     const formData = new FormData(addForm);
     const formJson = Object.fromEntries(formData.entries());
     const title = formJson.title;
@@ -160,10 +161,11 @@ function Tabs(){
     addForm.reset();
   }
 
-  function handleSearchClick(e:any){
+  function handleSearchClick(e:React.MouseEvent<Element, MouseEvent>){
     e.preventDefault();
 
-    const searchForm = e.target.parentNode.form;
+    const target = e.target as Element;
+    const searchForm = (target.parentNode as HTMLFormElement).form;
     const formData = new FormData(searchForm);
     const formJson = Object.fromEntries(formData.entries());
 
@@ -188,7 +190,7 @@ function Tabs(){
                 publisher: publisher,
                 isbn: formJson.isbn,
                 status: status
-               }];
+              }];
               setBookList(newBookList);
 
           })
@@ -210,15 +212,16 @@ function Tabs(){
     setActiveTab('add-books');
   }
 
-  function handleTabClick(e:any){
-    setActiveTab(e.target.value);
+  function handleTabClick(e:React.MouseEvent<Element, MouseEvent>){
+    const target = e.target as HTMLButtonElement;
+    setActiveTab(target.value);
   }
   
   return(
     <>
        <nav className="nav">
-        <NavigationTabButton value='add-books' className={`adding-page-button ${activeTab == 'add-books' ? 'active-btn': ''}`} content='Add books' onTabClick={(e:any) => handleTabClick(e)} />
-        <NavigationTabButton value='my-books' className={`book-page-button ${activeTab == 'my-books' ? 'active-btn': ''}`} content='My books' onTabClick={(e:any) => handleTabClick(e)} />
+        <NavigationTabButton value='add-books' className={`adding-page-button ${activeTab == 'add-books' ? 'active-btn': ''}`} content='Add books' onTabClick={(e) => handleTabClick(e)} />
+        <NavigationTabButton value='my-books' className={`book-page-button ${activeTab == 'my-books' ? 'active-btn': ''}`} content='My books' onTabClick={(e) => handleTabClick(e)} />
       </nav>
 
       <AddingTab className={`${activeTab == 'add-books' ? 'active-page': ''}`} handleAddClick={handleAddClick} handleSearchClick={handleSearchClick}></AddingTab>
@@ -228,7 +231,7 @@ function Tabs(){
   )
 }
 
-function AddingTab({className, handleAddClick, handleSearchClick}: {className: string, handleAddClick:any, handleSearchClick:any}){
+function AddingTab({className, handleAddClick, handleSearchClick}: {className: string, handleAddClick:MouseEventHandler, handleSearchClick:MouseEventHandler}){
   return(
     <section className={`main-page adding-page ${className}`}>
       <BookAddForm handleAddClick={handleAddClick} handleSearchClick={handleSearchClick}></BookAddForm>
@@ -256,8 +259,9 @@ function BooksTab({className, bookList}: {className: string, bookList: any}){
   const [activeSection, setActiveSection] = useState('');
 
 
-  function handleSectionClick(e:any){
-    const clickedSection = e.target.id;
+  function handleSectionClick(e:MouseEvent){
+    const target = e.target as Element;
+    const clickedSection = target.id;
     if (clickedSection === activeSection){
       setActiveSection('');
     } else {
@@ -268,9 +272,9 @@ function BooksTab({className, bookList}: {className: string, bookList: any}){
 
   return(
     <section className={`main-page book-page ${className}`}>
-      <BooksStatusSection section={'to-read'} sectionActiveStatus={`${activeSection == 'to-read' ? 'active' : '' }`} onSectionClick={(e:any) => handleSectionClick(e)} bookList={bookList}>To Read</BooksStatusSection>
-      <BooksStatusSection section={'reading'} sectionActiveStatus={`${activeSection == 'reading' ? 'active' : '' }`} onSectionClick={(e:any) => handleSectionClick(e)} bookList={bookList}>Reading</BooksStatusSection>
-      <BooksStatusSection section={'finished'} sectionActiveStatus={`${activeSection == 'finished' ? 'active' : '' }`} onSectionClick={(e:any) => handleSectionClick(e)} bookList={bookList}>Finished</BooksStatusSection>
+      <BooksStatusSection section={'to-read'} sectionActiveStatus={`${activeSection == 'to-read' ? 'active' : '' }`} onSectionClick={(e:MouseEvent) => handleSectionClick(e)} bookList={bookList}>To Read</BooksStatusSection>
+      <BooksStatusSection section={'reading'} sectionActiveStatus={`${activeSection == 'reading' ? 'active' : '' }`} onSectionClick={(e:MouseEvent) => handleSectionClick(e)} bookList={bookList}>Reading</BooksStatusSection>
+      <BooksStatusSection section={'finished'} sectionActiveStatus={`${activeSection == 'finished' ? 'active' : '' }`} onSectionClick={(e:MouseEvent) => handleSectionClick(e)} bookList={bookList}>Finished</BooksStatusSection>
     </section>
   )
 }

@@ -10,7 +10,7 @@ export default function BookDetailsWindow({title, author, publisher, isbn, showD
   }
 
   return(
-    <div className={'book-details' + `${showDetails && ' active'}`} onClick={(e) => handleClose(e)}>
+    <div className={'book-details' + `${showDetails && ' active'}`} onMouseDown={(e) => handleClose(e)}>
       <div className="book-details-content">
           <span className="book-details-close">&times;</span>
           <div className="book-details-text">

@@ -3,14 +3,16 @@ import Image from 'next/image';
 
 export default function BookDetailsWindow({title, author, publisher, isbn, showDetails, setShowDetails}:{title:string, author:string, publisher: string, isbn: number, showDetails:any, setShowDetails:any}){
 
-  function handleClose(){
-      setShowDetails(false);
+  function handleClose(e:any){
+      if (e.target.classList.contains('book-details-close') || e.target.classList.contains('book-details', 'active')){
+        setShowDetails(false);
+      }
   }
 
   return(
-    <div className={'book-details' + `${showDetails && ' active'}`}>
+    <div className={'book-details' + `${showDetails && ' active'}`} onClick={(e) => handleClose(e)}>
       <div className="book-details-content">
-          <span className="book-details-close" onClick={() => handleClose()}>&times;</span>
+          <span className="book-details-close">&times;</span>
           <div className="book-details-text">
 
             <div className="book-details-text-inner">

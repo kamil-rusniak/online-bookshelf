@@ -2,8 +2,8 @@ import Head from 'next/head'
 import Script from 'next/script'
 import { useState, MouseEventHandler } from 'react';
 import { getBookJson, getAuthor } from './api/openlibrary';
-import BookElement from './BookElement';
-import BookAddForm from './BookAddForm';
+import BookElement from './components/BookElement';
+import BookAddForm from './components/BookAddForm';
 
 
 function NavigationTabButton({value, content, onTabClick, className}: {value: string, content:string, onTabClick: MouseEventHandler<HTMLButtonElement>, className: string}){

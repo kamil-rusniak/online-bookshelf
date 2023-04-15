@@ -1,6 +1,6 @@
-import { ReactNode } from 'react';
+import { MouseEventHandler, ReactNode } from 'react';
 
-function BookAddButton({value, className, id, children, handleAddClick}: {value: string, className: string, id: string, children:string, handleAddClick: any}){
+function BookAddButton({value, className, id, children, handleAddClick}: {value: string, className: string, id: string, children:string, handleAddClick:MouseEventHandler}){
   
   return(
     <button 
@@ -14,21 +14,21 @@ function BookAddButton({value, className, id, children, handleAddClick}: {value:
   )
 }
 
-function BookSearchButton({value, className, id, children, handleSearchClick}: {value: string, className: string, id: string, children:ReactNode, handleSearchClick:any}){
+function BookSearchButton({value, className, id, children, handleSearchClick}: {value: string, className: string, id: string, children:ReactNode, handleSearchClick: MouseEventHandler}){
   
   return(
     <button 
       value={value} 
       className={className} 
       id={id}
-      onClick={handleSearchClick}
+      onClick={() => handleSearchClick}
       >
       {children}
     </button>
   )
 }
 
-export default function BookAddForm({handleAddClick, handleSearchClick}:{handleAddClick:any, handleSearchClick:any}){
+export default function BookAddForm({handleAddClick, handleSearchClick}:{handleAddClick: MouseEventHandler, handleSearchClick: MouseEventHandler}){
 
   return(
       <form>
@@ -57,8 +57,7 @@ export default function BookAddForm({handleAddClick, handleSearchClick}:{handleA
 
           </div>
           <p className="small-info">
-            You can enter info manually and click 'Add' or just type ISBN and
-            click search button
+            Enter info manually and click &quot;Add&quot; or enter just the ISBN and click the search button
           </p>
         </div>
 

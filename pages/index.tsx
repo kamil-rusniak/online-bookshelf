@@ -23,10 +23,10 @@ function Tabs(){
 
   const bookListObject = [{
     id: 0,
-    title: `To read book title`,
+    title: `To read book title (NO ISBN)`,
     author: `Book Author`,
     publisher: 'Publisher',
-    isbn:'000',
+    isbn:'',
     status:'to-read',
   },
   {
@@ -94,7 +94,7 @@ function Tabs(){
       isbn={book.isbn} 
       publisher={book.publisher} 
       status={book.status} 
-      onSwitch={(e:MouseEvent) => handleSwitch(e, book.id)} 
+      onSwitch={(switchType:string) => handleSwitch(switchType, book.id)} 
       onDelete={() => handleDelete(book.id)}
     />
   );

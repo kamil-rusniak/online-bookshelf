@@ -1,31 +1,31 @@
-import { useState } from "react"
+import { MouseEventHandler, useState } from "react"
 import BookDetailsWindow from "./BookDetailsWindow"
 
-function BookButtons({onSwitch, onDelete, onInfo}:{onSwitch:any, onDelete:any, onInfo:any}){
+function BookButtons({onSwitch, onDelete, onInfo}:{onSwitch:Function, onDelete:MouseEventHandler, onInfo:MouseEventHandler}){
   
   return(
     <div className="book-buttons">
-      <BookInfoButton onInfo={() => onInfo()}></BookInfoButton>
-      <BookDeleteButton onDelete={() => onDelete()}></BookDeleteButton>
+      <BookInfoButton onInfo={(e) => onInfo(e)}></BookInfoButton>
+      <BookDeleteButton onDelete={(e) => onDelete(e)}></BookDeleteButton>
       <BookSwitchButton onSwitch={() => onSwitch('up')} switchType='up' />
       <BookSwitchButton onSwitch={() => onSwitch('down')} switchType='down' />
   </div>
   )
 }
 
-function BookSwitchButton({onSwitch, switchType}:{onSwitch:any, switchType:string}){
+function BookSwitchButton({onSwitch, switchType}:{onSwitch:MouseEventHandler, switchType:string}){
   return(
     <i className={`fas fa-angle-double-${switchType} switch-${switchType}-button`} onClick={onSwitch}></i>
   )
 }
 
-function BookDeleteButton({onDelete}:{onDelete:any}){
+function BookDeleteButton({onDelete}:{onDelete:MouseEventHandler}){
   return(
     <i className="far fa-times-circle book-delete-button" onClick={onDelete}></i>
   )
 }
 
-function BookInfoButton({onInfo}:{onInfo:any}){
+function BookInfoButton({onInfo}:{onInfo:MouseEventHandler}){
   return(
     <i className="fas fa-info-circle book-info-button" onClick={onInfo}></i>
   )
@@ -33,7 +33,7 @@ function BookInfoButton({onInfo}:{onInfo:any}){
 
 
 
-export default function BookElement({title, author, publisher, isbn, status, onSwitch, onDelete}:{title: string, author: string, publisher: string, isbn:number, status: string, onSwitch:any, onDelete:any}){
+export default function BookElement({title, author, publisher, isbn, onSwitch, onDelete}:{title: string, author: string, publisher: string, isbn:number, status: string, onSwitch:Function, onDelete:MouseEventHandler}){
   const [showDetails, setShowDetails] = useState(false);
 
   function handleInfo(){
@@ -63,9 +63,6 @@ export default function BookElement({title, author, publisher, isbn, status, onS
           setShowDetails={setShowDetails}
         />
       }
-   
-       
-
      </div>
   )
 }

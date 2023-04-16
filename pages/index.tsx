@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import Script from 'next/script'
-import { useState, MouseEventHandler } from 'react';
+import { useState, MouseEventHandler, SetStateAction } from 'react';
 import { getBookJson, getAuthor } from './api/openlibrary';
 import BookElement from './components/BookElement';
 import BookAddForm from './components/BookAddForm';
@@ -25,16 +25,16 @@ function Tabs(){
     title: string,
     author: string,
     publisher: string,
-    isbn: number | null,
+    isbn: string,
     status: string
 }
 
-  const bookListObject:Array<BookObject> = [{
+  const bookListObject:BookObject[] = [{
     id: 0,
     title: `To read book title (NO ISBN)`,
     author: `Book Author`,
     publisher: 'Publisher',
-    isbn: null,
+    isbn: '',
     status:'to-read',
   },
   {
@@ -42,7 +42,7 @@ function Tabs(){
     title: `Finished book`,
     author: `Book Author`,
     publisher: 'Publisher',
-    isbn: 111,
+    isbn: '111',
     status:'finished',
   },
   {
@@ -50,7 +50,7 @@ function Tabs(){
     title: `Reading/in-progress book`,
     author: `Book Author`,
     publisher: 'Publisher',
-    isbn: 222,
+    isbn: '222',
     status:'reading',
   },
   {
@@ -58,7 +58,7 @@ function Tabs(){
     title: `Harry Potter and the Philosopher's Stone`,
     author: `J. K. Rowling`,
     publisher: 'Bloomsbury',
-    isbn: 9781408855652,
+    isbn: '9781408855652',
     status:'to-read',
   },
   {
@@ -66,7 +66,7 @@ function Tabs(){
     title: `A Book to Read`,
     author: `Author`,
     publisher: 'Publisher',
-    isbn: 444,
+    isbn: '444',
     status:'to-read',
   },
   {
@@ -74,7 +74,7 @@ function Tabs(){
     title: `Next Book to Read`,
     author: `Mr Author`,
     publisher: 'Publisher',
-    isbn: 555,
+    isbn: '555',
     status:'to-read',
   },
   {
@@ -82,7 +82,7 @@ function Tabs(){
     title: `Another Book to Read`,
     author: `Mrs Author`,
     publisher: 'Publisher',
-    isbn: 666,
+    isbn: '666',
     status:'to-read',
   }];
 
@@ -94,7 +94,7 @@ function Tabs(){
   // when switching book don't move them around in between different lists or change IDs or something - just update the status
   const [bookList, setBookList] = useState(bookListObject);
 
-  let toReadBookList = bookList.map((book:any) =>
+  let toReadBookList = bookList.map((book:BookObject) =>
     <BookElement
       key={book.id} 
       title={book.title} 
@@ -107,14 +107,14 @@ function Tabs(){
     />
   );
 
-  function handleSwitch(switchType:any, bookId:any){
+  function handleSwitch(switchType:string, bookId:number){
 
     console.log(switchType);
     console.log(bookId);
     console.log(bookList);
 
     let newBookList:BookObject[] = [...bookList];
-    let targetBook = newBookList.find((book:any) => book.id === bookId);
+    let targetBook = newBookList.find((book:BookObject) => book.id === bookId);
 
     if(targetBook != undefined){
       if(targetBook.status === 'to-read'){
@@ -134,9 +134,9 @@ function Tabs(){
   }
 
   
-  function handleDelete(bookId:any){
-    let newBookList:any = [...bookList];
-    newBookList = newBookList.filter((book:any) => book.id !== bookId);
+  function handleDelete(bookId:number){
+    let newBookList:BookObject[] = [...bookList];
+    newBookList = newBookList.filter((book:BookObject) => book.id !== bookId);
     setBookList(newBookList);
   }
 
@@ -148,13 +148,13 @@ function Tabs(){
     const addForm = (target as HTMLFormElement).form;
     const formData = new FormData(addForm);
     const formJson = Object.fromEntries(formData.entries());
-    const title = formJson.title;
-    const author = formJson.author;
-    const publisher = formJson.publisher;
-    const isbn = formJson.isbn;
+    const title = formJson.title as string;
+    const author = formJson.author as string;
+    const publisher = formJson.publisher as string;
+    const isbn = formJson.isbn as string;
     const status = 'to-read';
 
-    let newBookList:any = [...bookList];
+    let newBookList:BookObject[] = [...bookList];
     newBookList = [...newBookList, { 
       id: bookList.length + 1,
       title: title,
@@ -177,25 +177,28 @@ function Tabs(){
     const formJson = Object.fromEntries(formData.entries());
 
     getBookJson(formJson.isbn).then((result) => {
-      let authorsArray:any;
+      let authorsArray:string[];
       console.log(result);
       const title = result.title;
       const publisher = result.publishers;
       const authorKeysArray = result.authors;
       const status = 'to-read';
 
-      authorKeysArray.forEach((author:any) => {
-          const authorKey = author.key;
-          getAuthor(authorKey).then((result) => {
+      interface Author{
+        key: string
+      }
+
+      authorKeysArray.forEach((author:Author) => {
+          getAuthor(author.key).then((result) => {
             const authorName = result.name;
               console.log(authorName);
-              let newBookList:any = [...bookList];
+              let newBookList:BookObject[] = [...bookList];
               newBookList = [...newBookList, { 
                 id: bookList.length + 1,
                 title: title,
                 author: authorName,
                 publisher: publisher,
-                isbn: formJson.isbn,
+                isbn: formJson.isbn as string,
                 status: status
               }];
               setBookList(newBookList);

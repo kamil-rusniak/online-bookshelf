@@ -10,7 +10,7 @@ export const getBookJson = async (isbn:FormDataEntryValue) => {
   }
 };
 
-export const getAuthor = async (authorCode:any) => {
+export const getAuthor = async (authorCode:string) => {
   try {
     const res = await fetch(
       `https://openlibrary.org${authorCode}.json`

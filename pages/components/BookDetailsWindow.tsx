@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { Dispatch, SetStateAction } from 'react';
 
 
-export default function BookDetailsWindow({title, author, publisher, isbn, showDetails, setShowDetails}:{title:string, author:string, publisher: string, isbn: number, showDetails:boolean, setShowDetails:Dispatch<SetStateAction<boolean>>}){
+export default function BookDetailsWindow({title, author, publisher, isbn, showDetails, setShowDetails}:{title:string, author:string, publisher: string, isbn: string, showDetails:boolean, setShowDetails:Dispatch<SetStateAction<boolean>>}){
 
   function handleClose(e:React.MouseEvent<Element, MouseEvent>){
     const target = e.target as Element;
@@ -50,7 +50,7 @@ export default function BookDetailsWindow({title, author, publisher, isbn, showD
                 <h2>ISBN</h2>
                 <i className="far fa-edit details-edit"></i>
               </div>
-              <input readOnly type="text" className="book-details-input"  id="book-details-isbn" value={isbn}/>
+              <input readOnly type="number" className="book-details-input"  id="book-details-isbn" value={isbn}/>
               <i className="far fa-check-circle edit-confirm"></i>
             </div>
 

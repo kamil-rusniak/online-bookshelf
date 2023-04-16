@@ -20,13 +20,21 @@ function NavigationTabButton({value, content, onTabClick, className}: {value: st
 
 
 function Tabs(){
+  interface BookObject {
+    id: number,
+    title: string,
+    author: string,
+    publisher: string,
+    isbn: number | null,
+    status: string
+}
 
-  const bookListObject = [{
+  const bookListObject:Array<BookObject> = [{
     id: 0,
     title: `To read book title (NO ISBN)`,
     author: `Book Author`,
     publisher: 'Publisher',
-    isbn:'',
+    isbn: null,
     status:'to-read',
   },
   {
@@ -34,7 +42,7 @@ function Tabs(){
     title: `Finished book`,
     author: `Book Author`,
     publisher: 'Publisher',
-    isbn:'111',
+    isbn: 111,
     status:'finished',
   },
   {
@@ -42,7 +50,7 @@ function Tabs(){
     title: `Reading/in-progress book`,
     author: `Book Author`,
     publisher: 'Publisher',
-    isbn:'222',
+    isbn: 222,
     status:'reading',
   },
   {
@@ -58,7 +66,7 @@ function Tabs(){
     title: `A Book to Read`,
     author: `Author`,
     publisher: 'Publisher',
-    isbn:'444',
+    isbn: 444,
     status:'to-read',
   },
   {
@@ -66,7 +74,7 @@ function Tabs(){
     title: `Next Book to Read`,
     author: `Mr Author`,
     publisher: 'Publisher',
-    isbn:'555',
+    isbn: 555,
     status:'to-read',
   },
   {
@@ -74,7 +82,7 @@ function Tabs(){
     title: `Another Book to Read`,
     author: `Mrs Author`,
     publisher: 'Publisher',
-    isbn:'666',
+    isbn: 666,
     status:'to-read',
   }];
 
@@ -105,23 +113,22 @@ function Tabs(){
     console.log(bookId);
     console.log(bookList);
 
-    let newBookList:any = [...bookList];
+    let newBookList:BookObject[] = [...bookList];
     let targetBook = newBookList.find((book:any) => book.id === bookId);
-    console.log(newBookList);
-    console.log(targetBook);
 
-    if(targetBook.status === 'to-read'){
-      targetBook.status = 'reading';
-    } else if(targetBook.status === 'reading'){
-      if (switchType === 'up'){
-        targetBook.status = 'to-read';
-      } else{
-        targetBook.status = 'finished';
+    if(targetBook != undefined){
+      if(targetBook.status === 'to-read'){
+        targetBook.status = 'reading';
+      } else if(targetBook.status === 'reading'){
+        if (switchType === 'up'){
+          targetBook.status = 'to-read';
+        } else{
+          targetBook.status = 'finished';
+        }
+      } else {
+        targetBook.status = 'reading';
       }
-    } else {
-      targetBook.status = 'reading';
     }
-
 
     setBookList(newBookList);
   }
@@ -272,9 +279,9 @@ function BooksTab({className, bookList}: {className: string, bookList: any}){
 
   return(
     <section className={`main-page book-page ${className}`}>
-      <BooksStatusSection section={'to-read'} sectionActiveStatus={`${activeSection == 'to-read' ? 'active' : '' }`} onSectionClick={(e:MouseEvent) => handleSectionClick(e)} bookList={bookList}>To Read</BooksStatusSection>
-      <BooksStatusSection section={'reading'} sectionActiveStatus={`${activeSection == 'reading' ? 'active' : '' }`} onSectionClick={(e:MouseEvent) => handleSectionClick(e)} bookList={bookList}>Reading</BooksStatusSection>
-      <BooksStatusSection section={'finished'} sectionActiveStatus={`${activeSection == 'finished' ? 'active' : '' }`} onSectionClick={(e:MouseEvent) => handleSectionClick(e)} bookList={bookList}>Finished</BooksStatusSection>
+      <BooksStatusSection section={'to-read'} sectionActiveStatus={`${activeSection == 'to-read' && 'active' }`} onSectionClick={(e:MouseEvent) => handleSectionClick(e)} bookList={bookList}>To Read</BooksStatusSection>
+      <BooksStatusSection section={'reading'} sectionActiveStatus={`${activeSection == 'reading' && 'active'}`} onSectionClick={(e:MouseEvent) => handleSectionClick(e)} bookList={bookList}>Reading</BooksStatusSection>
+      <BooksStatusSection section={'finished'} sectionActiveStatus={`${activeSection == 'finished' && 'active'}`} onSectionClick={(e:MouseEvent) => handleSectionClick(e)} bookList={bookList}>Finished</BooksStatusSection>
     </section>
   )
 }

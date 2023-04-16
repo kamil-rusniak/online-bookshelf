@@ -50,7 +50,7 @@ export default function BookAddForm({handleAddClick, handleSearchClick}:{handleA
         <div className="input-wrapper">
           <label className="label" htmlFor="isbn">ISBN</label>
           <div className="input-inner">
-            <input type="text" name="isbn" id="isbn" className="isbn" />
+            <input type="number" name="isbn" id="isbn" className="isbn" />
             <BookSearchButton className='' id='search-button' value='Search' handleSearchClick={handleSearchClick}>
               <i className="fas fa-search search-icon" id="search-icon"></i>
             </BookSearchButton>

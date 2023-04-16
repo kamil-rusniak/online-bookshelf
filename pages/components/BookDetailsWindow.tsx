@@ -55,14 +55,17 @@ export default function BookDetailsWindow({title, author, publisher, isbn, showD
             </div>
 
           </div>
-          {/* show only if isbn isn't empty */}
-          <div className="book-image"> 
-            <Image
-              src={`https://covers.openlibrary.org/b/isbn/${isbn}-L.jpg`}
-              alt="${title} Book Cover"
-              fill={true}
-            />
-          </div>
+
+          {isbn && 
+            <div className="book-image"> 
+              <Image
+                src={`https://covers.openlibrary.org/b/isbn/${isbn}-L.jpg`}
+                alt="${title} Book Cover"
+                fill={true}
+              />
+            </div>
+          }
+ 
         </div>
       </div>
   )

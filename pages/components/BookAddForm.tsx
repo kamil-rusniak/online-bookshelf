@@ -21,7 +21,7 @@ function BookSearchButton({value, className, id, children, handleSearchClick}: {
       value={value} 
       className={className} 
       id={id}
-      onClick={() => handleSearchClick}
+      onClick={handleSearchClick}
       >
       {children}
     </button>

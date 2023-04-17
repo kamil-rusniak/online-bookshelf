@@ -86,8 +86,9 @@ function Tabs(){
     status:'to-read',
   }];
 
-// 9781408855652
-// 1780894554
+// 9781408855652 - one author
+// 1780894554 - 2 author but one author key so counts as one author
+// 9780063088146 - 5 'separate' authors
 
 
   // do it only for first time and then read from local storage and setBookList to something from local storage
@@ -191,17 +192,18 @@ function Tabs(){
       authorKeysArray.forEach((author:Author) => {
           getAuthor(author.key).then((result) => {
             const authorName = result.name;
-              console.log(authorName);
-              let newBookList:BookObject[] = [...bookList];
-              newBookList = [...newBookList, { 
-                id: bookList.length + 1,
-                title: title,
-                author: authorName,
-                publisher: publisher,
-                isbn: formJson.isbn as string,
-                status: status
-              }];
-              setBookList(newBookList);
+            authorsArray.push(` ${authorName}`);
+
+            let newBookList:BookObject[] = [...bookList];
+            newBookList = [...newBookList, { 
+              id: bookList.length + 1,
+              title: title,
+              author: authorsArray.toString(),
+              publisher: publisher,
+              isbn: formJson.isbn as string,
+              status: status
+            }];
+            setBookList(newBookList);
 
           })
           .catch((err) => {

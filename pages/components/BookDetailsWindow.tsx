@@ -62,6 +62,7 @@ export default function BookDetailsWindow({title, author, publisher, isbn, showD
                 src={`https://covers.openlibrary.org/b/isbn/${isbn}-L.jpg`}
                 alt="${title} Book Cover"
                 fill={true}
+                sizes='20vw'
               />
             </div>
           }

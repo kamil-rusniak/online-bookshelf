@@ -1,10 +1,18 @@
 import Head from 'next/head'
 import Script from 'next/script'
-import { useState, MouseEventHandler, SetStateAction } from 'react';
+import { useState, MouseEventHandler, ReactElement } from 'react';
 import { getBookJson, getAuthor } from './api/openlibrary';
 import BookElement from './components/BookElement';
 import BookAddForm from './components/BookAddForm';
 
+interface BookObject {
+  id: number,
+  title: string,
+  author: string,
+  publisher: string,
+  isbn: string,
+  status: string
+}
 
 function NavigationTabButton({value, content, onTabClick, className}: {value: string, content:string, onTabClick: MouseEventHandler<HTMLButtonElement>, className: string}){
   return (
@@ -18,24 +26,14 @@ function NavigationTabButton({value, content, onTabClick, className}: {value: st
   )
 }
 
-
 function Tabs(){
-  interface BookObject {
-    id: number,
-    title: string,
-    author: string,
-    publisher: string,
-    isbn: string,
-    status: string
-}
-
   const bookListObject:BookObject[] = [{
     id: 0,
     title: `To read book title (NO ISBN)`,
     author: `Book Author`,
     publisher: 'Publisher',
     isbn: '',
-    status:'to-read',
+    status:'to-read'
   },
   {
     id: 1,
@@ -43,7 +41,7 @@ function Tabs(){
     author: `Book Author`,
     publisher: 'Publisher',
     isbn: '111',
-    status:'finished',
+    status:'finished'
   },
   {
     id: 2,
@@ -51,7 +49,7 @@ function Tabs(){
     author: `Book Author`,
     publisher: 'Publisher',
     isbn: '222',
-    status:'reading',
+    status:'reading'
   },
   {
     id: 3,
@@ -59,7 +57,7 @@ function Tabs(){
     author: `J. K. Rowling`,
     publisher: 'Bloomsbury',
     isbn: '9781408855652',
-    status:'to-read',
+    status:'to-read'
   },
   {
     id: 4,
@@ -67,7 +65,7 @@ function Tabs(){
     author: `Author`,
     publisher: 'Publisher',
     isbn: '444',
-    status:'to-read',
+    status:'to-read'
   },
   {
     id: 5,
@@ -75,7 +73,7 @@ function Tabs(){
     author: `Mr Author`,
     publisher: 'Publisher',
     isbn: '555',
-    status:'to-read',
+    status:'to-read'
   },
   {
     id: 6,
@@ -83,7 +81,7 @@ function Tabs(){
     author: `Mrs Author`,
     publisher: 'Publisher',
     isbn: '666',
-    status:'to-read',
+    status:'to-read'
   }];
 
 // 9781408855652 - one author
@@ -251,10 +249,12 @@ function AddingTab({className, handleAddClick, handleSearchClick}: {className: s
   )
 }
 
-function BooksStatusSection({sectionActiveStatus, children, section, onSectionClick, bookList}:{sectionActiveStatus: string, children: string, section: string, onSectionClick: any, bookList:any}){
+function BooksStatusSection({sectionActiveStatus, children, section, onSectionClick, bookList}:{sectionActiveStatus: string, children: string, section: string, onSectionClick: MouseEventHandler, bookList: ReactElement[]}){
 
-    bookList = bookList.filter((book:any) => {
-      return book.props.status === section;
+    bookList = bookList.filter((book: ReactElement) => {
+      if(book){
+        return book.props.status === section;
+      }
     });
 
   return(
@@ -267,11 +267,11 @@ function BooksStatusSection({sectionActiveStatus, children, section, onSectionCl
   )
 }
 
-function BooksTab({className, bookList}: {className: string, bookList: any}){
+function BooksTab({className, bookList}: {className: string, bookList: ReactElement[]}){
   const [activeSection, setActiveSection] = useState('');
 
 
-  function handleSectionClick(e:MouseEvent){
+  function handleSectionClick(e:React.MouseEvent<Element, MouseEvent>){
     const target = e.target as Element;
     const clickedSection = target.id;
     if (clickedSection === activeSection){
@@ -284,9 +284,9 @@ function BooksTab({className, bookList}: {className: string, bookList: any}){
 
   return(
     <section className={`main-page book-page ${className}`}>
-      <BooksStatusSection section={'to-read'} sectionActiveStatus={`${activeSection == 'to-read' && 'active' }`} onSectionClick={(e:MouseEvent) => handleSectionClick(e)} bookList={bookList}>To Read</BooksStatusSection>
-      <BooksStatusSection section={'reading'} sectionActiveStatus={`${activeSection == 'reading' && 'active'}`} onSectionClick={(e:MouseEvent) => handleSectionClick(e)} bookList={bookList}>Reading</BooksStatusSection>
-      <BooksStatusSection section={'finished'} sectionActiveStatus={`${activeSection == 'finished' && 'active'}`} onSectionClick={(e:MouseEvent) => handleSectionClick(e)} bookList={bookList}>Finished</BooksStatusSection>
+      <BooksStatusSection section={'to-read'} sectionActiveStatus={`${activeSection == 'to-read' && 'active' }`} onSectionClick={(e:React.MouseEvent<Element, MouseEvent>) => handleSectionClick(e)} bookList={bookList}>To Read</BooksStatusSection>
+      <BooksStatusSection section={'reading'} sectionActiveStatus={`${activeSection == 'reading' && 'active'}`} onSectionClick={(e:React.MouseEvent<Element, MouseEvent>) => handleSectionClick(e)} bookList={bookList}>Reading</BooksStatusSection>
+      <BooksStatusSection section={'finished'} sectionActiveStatus={`${activeSection == 'finished' && 'active'}`} onSectionClick={(e:React.MouseEvent<Element, MouseEvent>) => handleSectionClick(e)} bookList={bookList}>Finished</BooksStatusSection>
     </section>
   )
 }

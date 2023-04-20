@@ -28,8 +28,7 @@ function BookSearchButton({value, className, id, children, handleSearchClick}: {
   )
 }
 
-export default function BookAddForm({handleAddClick, handleSearchClick}:{handleAddClick: MouseEventHandler, handleSearchClick: MouseEventHandler}){
-
+ function BookAddForm({handleAddClick, handleSearchClick}:{handleAddClick: MouseEventHandler, handleSearchClick: MouseEventHandler}){
   return(
       <form>
         <div className="input-wrapper">
@@ -66,5 +65,13 @@ export default function BookAddForm({handleAddClick, handleSearchClick}:{handleA
         </BookAddButton>
       </form>
 
+  )
+}
+
+export default function AddingTab({className, handleAddClick, handleSearchClick}: {className: string, handleAddClick:MouseEventHandler, handleSearchClick:MouseEventHandler}){
+  return(
+    <section className={`main-page adding-page ${className}`}>
+      <BookAddForm handleAddClick={handleAddClick} handleSearchClick={handleSearchClick}></BookAddForm>
+    </section>
   )
 }

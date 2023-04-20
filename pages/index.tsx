@@ -3,7 +3,8 @@ import Script from 'next/script'
 import { useState, MouseEventHandler, ReactElement } from 'react';
 import { getBookJson, getAuthor } from './api/openlibrary';
 import BookElement from './components/BookElement';
-import BookAddForm from './components/BookAddForm';
+import AddingTab from '././components/AddingTab'
+import BooksTab from '././components/BooksTab'
 
 interface BookObject {
   id: number,
@@ -241,55 +242,6 @@ function Tabs(){
   )
 }
 
-function AddingTab({className, handleAddClick, handleSearchClick}: {className: string, handleAddClick:MouseEventHandler, handleSearchClick:MouseEventHandler}){
-  return(
-    <section className={`main-page adding-page ${className}`}>
-      <BookAddForm handleAddClick={handleAddClick} handleSearchClick={handleSearchClick}></BookAddForm>
-    </section>
-  )
-}
-
-function BooksStatusSection({sectionActiveStatus, children, section, onSectionClick, bookList}:{sectionActiveStatus: string, children: string, section: string, onSectionClick: MouseEventHandler, bookList: ReactElement[]}){
-
-    bookList = bookList.filter((book: ReactElement) => {
-      if(book){
-        return book.props.status === section;
-      }
-    });
-
-  return(
-    <article className={`books-status-section ${section} ${sectionActiveStatus}`} >
-      <h2 className="segment-button" id={section} onClick={onSectionClick}>{children}</h2>
-      <div className={`${section}-list`}>
-        {bookList}
-      </div>
-    </article>
-  )
-}
-
-function BooksTab({className, bookList}: {className: string, bookList: ReactElement[]}){
-  const [activeSection, setActiveSection] = useState('');
-
-
-  function handleSectionClick(e:React.MouseEvent<Element, MouseEvent>){
-    const target = e.target as Element;
-    const clickedSection = target.id;
-    if (clickedSection === activeSection){
-      setActiveSection('');
-    } else {
-      setActiveSection(clickedSection)
-    }
-
-  }
-
-  return(
-    <section className={`main-page book-page ${className}`}>
-      <BooksStatusSection section={'to-read'} sectionActiveStatus={`${activeSection == 'to-read' && 'active' }`} onSectionClick={(e:React.MouseEvent<Element, MouseEvent>) => handleSectionClick(e)} bookList={bookList}>To Read</BooksStatusSection>
-      <BooksStatusSection section={'reading'} sectionActiveStatus={`${activeSection == 'reading' && 'active'}`} onSectionClick={(e:React.MouseEvent<Element, MouseEvent>) => handleSectionClick(e)} bookList={bookList}>Reading</BooksStatusSection>
-      <BooksStatusSection section={'finished'} sectionActiveStatus={`${activeSection == 'finished' && 'active'}`} onSectionClick={(e:React.MouseEvent<Element, MouseEvent>) => handleSectionClick(e)} bookList={bookList}>Finished</BooksStatusSection>
-    </section>
-  )
-}
 
 export default function Home() {
 

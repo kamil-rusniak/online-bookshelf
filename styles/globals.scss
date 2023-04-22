@@ -125,15 +125,19 @@ nav {
       border-bottom-right-radius: 0;
       border-right: 0;
     }
-
-    .search-icon {
-      background-color: $purple;
-      color: #fff;
-      cursor: pointer;
-      padding: 0.75rem;
+    #search-button{
       border: 1px solid black;
       border-top-right-radius: 10px;
       border-bottom-right-radius: 10px;
+      cursor: pointer;
+      height: 58px;
+      padding: 1.25rem;
+      background-color: $purple;
+    }
+    .search-icon {
+      background-color: $purple;
+      color: #fff;
+      pointer-events: none;
     }
   }
 }
@@ -504,7 +508,7 @@ footer {
       }
 
       .search-icon {
-        padding: 0.24rem;
+       
       }
     }
   }

@@ -172,7 +172,7 @@ function Tabs(){
     e.preventDefault();
 
     const target = e.target as Element;
-    const searchForm = (target.parentNode as HTMLFormElement).form;
+    const searchForm = (target as HTMLFormElement).form;
     const formData = new FormData(searchForm);
     const formJson = Object.fromEntries(formData.entries());
 

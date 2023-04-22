@@ -177,7 +177,7 @@ function Tabs(){
     const formJson = Object.fromEntries(formData.entries());
 
     getBookJson(formJson.isbn).then((result) => {
-      let authorsArray:string[];
+      let authorsArray:string[] = [];
       console.log(result);
       const title = result.title;
       const publisher = result.publishers;

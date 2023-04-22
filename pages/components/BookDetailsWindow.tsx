@@ -1,8 +1,13 @@
 import Image from 'next/image';
-import { Dispatch, SetStateAction } from 'react';
+import { ChangeEvent, ChangeEventHandler, Dispatch, SetStateAction } from 'react';
 
 
-export default function BookDetailsWindow({title, author, publisher, isbn, showDetails, setShowDetails}:{title:string, author:string, publisher: string, isbn: string, showDetails:boolean, setShowDetails:Dispatch<SetStateAction<boolean>>}){
+function BookDetailsInput({value, fieldType, handleEdit}:{value: string, fieldType: string, handleEdit: Function}){
+  return(
+    <input onChange={(e:ChangeEvent<HTMLInputElement>) => handleEdit(e, fieldType)} type="text" className="book-details-input"  id={`book-details-${fieldType}`} value={value}/>
+  )
+}
+export default function BookDetailsWindow({title, author, publisher, isbn, showDetails, setShowDetails, handleEdit}:{title:string, author:string, publisher: string, isbn: string, showDetails:boolean, setShowDetails:Dispatch<SetStateAction<boolean>>, handleEdit: Function}){
 
   function handleClose(e:React.MouseEvent<Element, MouseEvent>){
     const target = e.target as Element;
@@ -20,37 +25,33 @@ export default function BookDetailsWindow({title, author, publisher, isbn, showD
             <div className="book-details-text-inner">
               <div className="book-details-header-text">
                 <h2>Title</h2>
-                <i className="far fa-edit details-edit"></i>
               </div>
             
-              <input readOnly type="text" className="book-details-input"  id="book-details-title" value={title}/>
+              <BookDetailsInput value={title} fieldType='title' handleEdit={(e:ChangeEventHandler<HTMLInputElement>) => handleEdit(e, 'title')}/>
               <i className="far fa-check-circle edit-confirm"></i>
             </div>
 
             <div className="book-details-text-inner">
               <div className="book-details-header-text">
                 <h2>Author</h2>
-                <i className="far fa-edit details-edit"></i>
               </div>
-              <input readOnly type="text" className="book-details-input"  id="book-details-author" value={author}/>
+              <BookDetailsInput value={author} fieldType='author' handleEdit={(e:ChangeEventHandler<HTMLInputElement>) => handleEdit(e, 'author')}/>
               <i className="far fa-check-circle edit-confirm"></i>
             </div>
 
             <div className="book-details-text-inner">
               <div className="book-details-header-text">
                 <h2>Publisher</h2>
-                <i className="far fa-edit details-edit"></i>
               </div>
-              <input readOnly type="text" className="book-details-input"  id="book-details-publisher" value={publisher}/>
+              <BookDetailsInput value={publisher} fieldType='publisher' handleEdit={(e:ChangeEventHandler<HTMLInputElement>) => handleEdit(e,'publisher')}/>
               <i className="far fa-check-circle edit-confirm"></i>
             </div>
 
             <div className="book-details-text-inner">
               <div className="book-details-header-text">
                 <h2>ISBN</h2>
-                <i className="far fa-edit details-edit"></i>
               </div>
-              <input readOnly type="number" className="book-details-input"  id="book-details-isbn" value={isbn}/>
+              <BookDetailsInput value={isbn} fieldType='isbn' handleEdit={(e:ChangeEventHandler<HTMLInputElement>) => handleEdit(e, 'isbn')}/>
               <i className="far fa-check-circle edit-confirm"></i>
             </div>
 

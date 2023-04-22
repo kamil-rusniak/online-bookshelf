@@ -104,6 +104,7 @@ function Tabs(){
       status={book.status} 
       onSwitch={(switchType:string) => handleSwitch(switchType, book.id)} 
       onDelete={() => handleDelete(book.id)}
+      handleEdit={(e:Event, fieldType:string) => handleEdit(e, book.id, fieldType)}
     />
   );
 
@@ -140,6 +141,17 @@ function Tabs(){
     setBookList(newBookList);
   }
 
+  function handleEdit(e:Event, bookId:number, fieldType:string){
+    let newBookList:BookObject[] = [...bookList];
+    let targetBook = newBookList.find((book:BookObject) => book.id === bookId);
+
+    if (targetBook != undefined){
+      // @ts-ignore
+      targetBook[fieldType] = e.target.value;
+    }
+
+    setBookList(newBookList);
+  }
 
   function handleAddClick(e:React.MouseEvent<Element, MouseEvent>){
     e.preventDefault();

@@ -164,7 +164,7 @@ function Tabs(){
     const author = formJson.author as string;
     const publisher = formJson.publisher as string;
     const isbn = formJson.isbn as string;
-    const status = 'to-read';
+    const status = formJson.section as string;
 
     let newBookList:BookObject[] = [...bookList];
     newBookList = [...newBookList, { 
@@ -194,8 +194,8 @@ function Tabs(){
       const title = result.title;
       const publisher = result.publishers;
       const authorKeysArray = result.authors;
-      const status = 'to-read';
-
+      const isbn = formJson.isbn as string;
+      const status = formJson.section as string;
       interface Author{
         key: string
       }
@@ -211,7 +211,7 @@ function Tabs(){
               title: title,
               author: authorsArray.toString(),
               publisher: publisher,
-              isbn: formJson.isbn as string,
+              isbn: isbn,
               status: status
             }];
             setBookList(newBookList);

@@ -6,7 +6,7 @@ import BookElement from './components/BookElement';
 import AddingTab from '././components/AddingTab'
 import BooksTab from '././components/BooksTab'
 
-interface BookObject {
+type BookObject = {
   id: number,
   title: string,
   author: string,

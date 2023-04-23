@@ -206,13 +206,19 @@ nav {
   max-height: 210px;
   transition: max-height 0.15s ease-out;
 }
-.books-status-section h2 {
+.books-status-section .segment-title {
+  border-bottom: 1px solid #000;
+  padding-bottom: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+.books-status-section .segment-button {
   font-size: 1.7rem;
   font-weight: 500;
-  border-bottom: 1px solid #000;
   padding-left: 1.2rem;
-  padding-bottom: 0.8rem;
-  cursor: pointer;
+  pointer-events: none;
 }
 .books-status-section .book-inner {
   display: flex;
@@ -230,7 +236,7 @@ nav {
   text-overflow: clip;
   white-space: normal;
 }
-.books-status-section.active .segment-button {
+.books-status-section.active .segment-title {
   color: #ff9463;
   border-bottom: 3px solid #ff9463;
 }
@@ -410,7 +416,7 @@ footer a {
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-  .books-status-section h2 {
+  .books-status-section .segment-button {
     font-size: 1.2rem;
   }
   .switch-left-button {

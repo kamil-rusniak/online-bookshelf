@@ -213,13 +213,19 @@ nav {
   max-height: 210px;
   transition: max-height 0.15s ease-out;
 
-  h2 {
+  .segment-title{
+    border-bottom: 1px solid #000;
+    padding-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+  }
+  .segment-button {
     font-size: 1.7rem;
     font-weight: 500;
-    border-bottom: 1px solid #000;
     padding-left: 1.2rem;
-    padding-bottom: 0.8rem;
-    cursor: pointer;
+    pointer-events: none;
   }
 
   .book-inner {
@@ -239,7 +245,7 @@ nav {
       white-space: normal;
     }
 
-    .segment-button {
+    .segment-title {
       color: $orange;
       border-bottom: 3px solid $orange;
     }
@@ -446,7 +452,7 @@ footer {
       white-space: nowrap;
     }
 
-    h2 {
+    .segment-button {
       font-size: 1.2rem;
     }
   }

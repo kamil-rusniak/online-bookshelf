@@ -10,7 +10,10 @@ function BooksStatusSection({sectionActiveStatus, children, section, onSectionCl
 
 return(
   <article className={`books-status-section ${section} ${sectionActiveStatus}`} >
-    <h2 className="segment-button" id={section} onClick={onSectionClick}>{children}</h2>
+    <div className="segment-title" id={section} onClick={onSectionClick}>
+      <h2 className="segment-button">{children}</h2>
+      <div className="book-count">{bookList.length}</div>
+    </div>
     <div className={`${section}-list`}>
       {bookList}
     </div>

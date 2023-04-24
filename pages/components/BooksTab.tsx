@@ -21,7 +21,7 @@ return(
 )
 }
 
-export default function BooksTab({className, bookList}: {className: string, bookList: ReactElement[]}){
+export default function BooksTab({bookList}: {bookList: ReactElement[]}){
 const [activeSection, setActiveSection] = useState('');
 
 
@@ -37,7 +37,7 @@ function handleSectionClick(e:React.MouseEvent<Element, MouseEvent>){
 }
 
 return(
-  <section className={`main-page book-page ${className}`}>
+  <section className={`main-page book-page active-page`}>
     <BooksStatusSection section={'to-read'} sectionActiveStatus={`${activeSection == 'to-read' && 'active' }`} onSectionClick={(e:React.MouseEvent<Element, MouseEvent>) => handleSectionClick(e)} bookList={bookList}>To Read</BooksStatusSection>
     <BooksStatusSection section={'reading'} sectionActiveStatus={`${activeSection == 'reading' && 'active'}`} onSectionClick={(e:React.MouseEvent<Element, MouseEvent>) => handleSectionClick(e)} bookList={bookList}>Reading</BooksStatusSection>
     <BooksStatusSection section={'finished'} sectionActiveStatus={`${activeSection == 'finished' && 'active'}`} onSectionClick={(e:React.MouseEvent<Element, MouseEvent>) => handleSectionClick(e)} bookList={bookList}>Finished</BooksStatusSection>

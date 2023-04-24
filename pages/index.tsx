@@ -247,8 +247,11 @@ function Tabs(){
         <NavigationTabButton value='my-books' className={`book-page-button ${activeTab == 'my-books' ? 'active-btn': ''}`} content='My books' onTabClick={(e) => handleTabClick(e)} />
       </nav>
 
-      <AddingTab className={`${activeTab == 'add-books' ? 'active-page': ''}`} handleAddClick={handleAddClick} handleSearchClick={handleSearchClick}></AddingTab>
-      <BooksTab bookList={toReadBookList} className={`${activeTab == 'my-books' ? 'active-page': ''}`} ></BooksTab>
+      {activeTab == 'add-books' ? (
+        <AddingTab handleAddClick={handleAddClick} handleSearchClick={handleSearchClick}></AddingTab>
+        ) : (
+        <BooksTab bookList={toReadBookList} ></BooksTab>
+      )}
     </>
 
   )

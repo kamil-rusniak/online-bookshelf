@@ -84,9 +84,9 @@ function SectionRadioInput({value, name, checked}:{value:string, name:string, ch
   )
 }
 
-export default function AddingTab({className, handleAddClick, handleSearchClick}: {className: string, handleAddClick:MouseEventHandler, handleSearchClick:MouseEventHandler}){
+export default function AddingTab({handleAddClick, handleSearchClick}: {handleAddClick:MouseEventHandler, handleSearchClick:MouseEventHandler}){
   return(
-    <section className={`main-page adding-page ${className}`}>
+    <section className={`main-page adding-page active-page`}>
       <BookAddForm handleAddClick={handleAddClick} handleSearchClick={handleSearchClick}></BookAddForm>
     </section>
   )

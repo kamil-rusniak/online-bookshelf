@@ -2,11 +2,12 @@ import Image from 'next/image';
 import { ChangeEvent, ChangeEventHandler, Dispatch, SetStateAction } from 'react';
 
 
-function BookDetailsInput({value, fieldType, handleEdit}:{value: string, fieldType: string, handleEdit: Function}){
+function BookDetailsInput({value, fieldType, handleEdit, autofocus}:{value: string, fieldType: string, handleEdit: Function, autofocus: boolean}){
   return(
-    <input onChange={(e:ChangeEvent<HTMLInputElement>) => handleEdit(e, fieldType)} type="text" className="book-details-input"  id={`book-details-${fieldType}`} value={value}/>
+    <input autoFocus={autofocus} onChange={(e:ChangeEvent<HTMLInputElement>) => handleEdit(e, fieldType)} type="text" className="book-details-input"  id={`book-details-${fieldType}`} value={value}/>
   )
 }
+
 export default function BookDetailsWindow({title, author, publisher, isbn, showDetails, setShowDetails, handleEdit}:{title:string, author:string, publisher: string, isbn: string, showDetails:boolean, setShowDetails:Dispatch<SetStateAction<boolean>>, handleEdit: Function}){
 
   function handleClose(e:React.MouseEvent<Element, MouseEvent>){
@@ -16,8 +17,14 @@ export default function BookDetailsWindow({title, author, publisher, isbn, showD
       }
   }
 
+  function handleKeyDown(e:React.KeyboardEvent){
+    if (e.key === 'Escape' || e.code === 'Escape'){
+      setShowDetails(false);
+    }
+  }
+
   return(
-    <div className={'book-details' + `${showDetails && ' active'}`} onMouseDown={(e) => handleClose(e)}>
+    <div className={'book-details' + `${showDetails && ' active'}`} onMouseDown={(e) => handleClose(e)} onKeyDown={(e) => handleKeyDown(e)} tabIndex={-1}>
       <div className="book-details-content">
           <span className="book-details-close">&times;</span>
           <div className="book-details-text">
@@ -27,7 +34,7 @@ export default function BookDetailsWindow({title, author, publisher, isbn, showD
                 <h2>Title</h2>
               </div>
             
-              <BookDetailsInput value={title} fieldType='title' handleEdit={(e:ChangeEventHandler<HTMLInputElement>) => handleEdit(e, 'title')}/>
+              <BookDetailsInput autofocus={true} value={title} fieldType='title' handleEdit={(e:ChangeEventHandler<HTMLInputElement>) => handleEdit(e, 'title')}/>
               <i className="far fa-check-circle edit-confirm"></i>
             </div>
 
@@ -35,7 +42,7 @@ export default function BookDetailsWindow({title, author, publisher, isbn, showD
               <div className="book-details-header-text">
                 <h2>Author</h2>
               </div>
-              <BookDetailsInput value={author} fieldType='author' handleEdit={(e:ChangeEventHandler<HTMLInputElement>) => handleEdit(e, 'author')}/>
+              <BookDetailsInput autofocus={false} value={author} fieldType='author' handleEdit={(e:ChangeEventHandler<HTMLInputElement>) => handleEdit(e, 'author')}/>
               <i className="far fa-check-circle edit-confirm"></i>
             </div>
 
@@ -43,7 +50,7 @@ export default function BookDetailsWindow({title, author, publisher, isbn, showD
               <div className="book-details-header-text">
                 <h2>Publisher</h2>
               </div>
-              <BookDetailsInput value={publisher} fieldType='publisher' handleEdit={(e:ChangeEventHandler<HTMLInputElement>) => handleEdit(e,'publisher')}/>
+              <BookDetailsInput autofocus={false} value={publisher} fieldType='publisher' handleEdit={(e:ChangeEventHandler<HTMLInputElement>) => handleEdit(e,'publisher')}/>
               <i className="far fa-check-circle edit-confirm"></i>
             </div>
 
@@ -51,7 +58,7 @@ export default function BookDetailsWindow({title, author, publisher, isbn, showD
               <div className="book-details-header-text">
                 <h2>ISBN</h2>
               </div>
-              <BookDetailsInput value={isbn} fieldType='isbn' handleEdit={(e:ChangeEventHandler<HTMLInputElement>) => handleEdit(e, 'isbn')}/>
+              <BookDetailsInput autofocus={false} value={isbn} fieldType='isbn' handleEdit={(e:ChangeEventHandler<HTMLInputElement>) => handleEdit(e, 'isbn')}/>
               <i className="far fa-check-circle edit-confirm"></i>
             </div>
 

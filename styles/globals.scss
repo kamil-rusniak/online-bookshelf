@@ -104,8 +104,19 @@ nav {
   width: 60%;
   flex-direction: column;
 
+  .book-add-form{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
   .input-wrapper {
     margin-top: 2rem;
+    width: 100%;
+
+    &.half{
+      width: calc(50% - 5px);
+    }
 
     input {
       width: 100%;

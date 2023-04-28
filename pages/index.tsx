@@ -11,6 +11,7 @@ type BookObject = {
   title: string,
   author: string,
   publisher: string,
+  genre: string,
   isbn: string,
   status: string
 }
@@ -33,6 +34,7 @@ function Tabs(){
     title: `To read book title (NO ISBN)`,
     author: `Book Author`,
     publisher: 'Publisher',
+    genre: 'Fantasy',
     isbn: '',
     status:'to-read'
   },
@@ -41,6 +43,7 @@ function Tabs(){
     title: `Finished book`,
     author: `Book Author`,
     publisher: 'Publisher',
+    genre: 'Fantasy',
     isbn: '111',
     status:'finished'
   },
@@ -49,6 +52,7 @@ function Tabs(){
     title: `Reading/in-progress book`,
     author: `Book Author`,
     publisher: 'Publisher',
+    genre: 'Fantasy',
     isbn: '222',
     status:'reading'
   },
@@ -57,6 +61,7 @@ function Tabs(){
     title: `Harry Potter and the Philosopher's Stone`,
     author: `J. K. Rowling`,
     publisher: 'Bloomsbury',
+    genre: 'Fantasy',
     isbn: '9781408855652',
     status:'to-read'
   },
@@ -65,6 +70,7 @@ function Tabs(){
     title: `A Book to Read`,
     author: `Author`,
     publisher: 'Publisher',
+    genre: 'Fantasy',
     isbn: '444',
     status:'to-read'
   },
@@ -73,6 +79,7 @@ function Tabs(){
     title: `Next Book to Read`,
     author: `Mr Author`,
     publisher: 'Publisher',
+    genre: 'Fantasy',
     isbn: '555',
     status:'to-read'
   },
@@ -81,6 +88,7 @@ function Tabs(){
     title: `Another Book to Read`,
     author: `Mrs Author`,
     publisher: 'Publisher',
+    genre: 'Fantasy',
     isbn: '666',
     status:'to-read'
   }];
@@ -101,6 +109,7 @@ function Tabs(){
       author={book.author} 
       isbn={book.isbn} 
       publisher={book.publisher} 
+      genre={book.genre} 
       status={book.status} 
       onSwitch={(switchType:string) => handleSwitch(switchType, book.id)} 
       onDelete={() => handleDelete(book.id)}
@@ -163,6 +172,7 @@ function Tabs(){
     const title = formJson.title as string;
     const author = formJson.author as string;
     const publisher = formJson.publisher as string;
+    const genre = formJson.genre as string;
     const isbn = formJson.isbn as string;
     const status = formJson.section as string;
 
@@ -172,6 +182,7 @@ function Tabs(){
       title: title,
       author: author,
       publisher: publisher,
+      genre: genre,
       isbn: isbn,
       status: status
      }];
@@ -194,6 +205,7 @@ function Tabs(){
       const title = result.title;
       const publisher = result.publishers;
       const authorKeysArray = result.authors;
+      const genre = formJson.genre as string;
       const isbn = formJson.isbn as string;
       const status = formJson.section as string;
       interface Author{
@@ -211,6 +223,7 @@ function Tabs(){
               title: title,
               author: authorsArray.toString(),
               publisher: publisher,
+              genre: genre,
               isbn: isbn,
               status: status
             }];

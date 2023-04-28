@@ -8,7 +8,7 @@ function BookDetailsInput({value, fieldType, handleEdit, autofocus}:{value: stri
   )
 }
 
-export default function BookDetailsWindow({title, author, publisher, isbn, showDetails, setShowDetails, handleEdit}:{title:string, author:string, publisher: string, isbn: string, showDetails:boolean, setShowDetails:Dispatch<SetStateAction<boolean>>, handleEdit: Function}){
+export default function BookDetailsWindow({title, author, publisher, genre, isbn, showDetails, setShowDetails, handleEdit}:{title:string, author:string, publisher: string, genre: string, isbn: string, showDetails:boolean, setShowDetails:Dispatch<SetStateAction<boolean>>, handleEdit: Function}){
 
   function handleClose(e:React.MouseEvent<Element, MouseEvent>){
     const target = e.target as Element;
@@ -51,6 +51,14 @@ export default function BookDetailsWindow({title, author, publisher, isbn, showD
                 <h2>Publisher</h2>
               </div>
               <BookDetailsInput autofocus={false} value={publisher} fieldType='publisher' handleEdit={(e:ChangeEventHandler<HTMLInputElement>) => handleEdit(e,'publisher')}/>
+              <i className="far fa-check-circle edit-confirm"></i>
+            </div>
+
+            <div className="book-details-text-inner">
+              <div className="book-details-header-text">
+                <h2>Genre</h2>
+              </div>
+              <BookDetailsInput autofocus={false} value={genre} fieldType='genre' handleEdit={(e:ChangeEventHandler<HTMLInputElement>) => handleEdit(e,'genre')}/>
               <i className="far fa-check-circle edit-confirm"></i>
             </div>
 

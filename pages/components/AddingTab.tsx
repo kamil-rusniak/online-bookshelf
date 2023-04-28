@@ -37,7 +37,7 @@ function SectionRadioInput({value, name, checked}:{value:string, name:string, ch
 
  function BookAddForm({handleAddClick, handleSearchClick}:{handleAddClick: MouseEventHandler, handleSearchClick: MouseEventHandler}){
   return(
-      <form> 
+      <form className='book-add-form'> 
         <div className="input-wrapper">
           <label className="label" htmlFor="isbn">ISBN</label>
           <div className="input-inner">
@@ -62,9 +62,14 @@ function SectionRadioInput({value, name, checked}:{value:string, name:string, ch
           <input type="text" name="author" id="author" />
         </div>
 
-        <div className="input-wrapper">
+        <div className="input-wrapper half">
           <label htmlFor="publisher">Publisher</label>
           <input type="text" name="publisher" id="publisher" />
+        </div>
+        
+        <div className="input-wrapper half">
+          <label htmlFor="genre">Genre</label>
+          <input type="text" name="genre" id="genre" />
         </div>
 
         <div className="input-wrapper sections">

@@ -154,10 +154,16 @@ nav {
   padding: 1.25rem;
   background-color: #3f3d56;
 }
-.adding-page .input-wrapper .search-icon {
+.adding-page .input-wrapper #search-button .search-icon {
   background-color: #3f3d56;
   color: #fff;
   pointer-events: none;
+}
+.adding-page .input-wrapper #search-button:disabled {
+  opacity: 0.6;
+}
+.adding-page .input-wrapper #search-button:disabled .search-icon {
+  opacity: 0.6;
 }
 .adding-page .input-wrapper.sections {
   display: flex;
@@ -213,6 +219,9 @@ nav {
   background-color: #3f3d56;
   color: #fff;
   margin: 3rem auto 2rem auto;
+}
+#add-button:disabled {
+  opacity: 0.6;
 }
 
 .book-page {

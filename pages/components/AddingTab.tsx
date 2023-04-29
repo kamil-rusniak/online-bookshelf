@@ -1,25 +1,27 @@
 import { MouseEventHandler, ReactNode } from 'react';
 
-function BookAddButton({value, className, id, children, handleAddClick}: {value: string, className: string, id: string, children:string, handleAddClick:MouseEventHandler}){
+function BookAddButton({value, className, id, children, handleAddClick, isLoading}: {value: string, className: string, id: string, children:string, handleAddClick:MouseEventHandler, isLoading:boolean}){
   return(
     <button 
       value={value} 
       className={className} 
       id={id}
       onClick={handleAddClick}
+      disabled={isLoading}
       >
       {children}
     </button>
   )
 }
 
-function BookSearchButton({value, className, id, children, handleSearchClick}: {value: string, className: string, id: string, children:ReactNode, handleSearchClick: MouseEventHandler}){
+function BookSearchButton({value, className, id, children, handleSearchClick, isLoading}: {value: string, className: string, id: string, children:ReactNode, handleSearchClick: MouseEventHandler, isLoading:boolean}){
   return(
     <button 
       value={value} 
       className={className} 
       id={id}
       onClick={handleSearchClick}
+      disabled={isLoading}
       >
       {children}
     </button>
@@ -35,14 +37,14 @@ function SectionRadioInput({value, name, checked}:{value:string, name:string, ch
   )
 }
 
- function BookAddForm({handleAddClick, handleSearchClick}:{handleAddClick: MouseEventHandler, handleSearchClick: MouseEventHandler}){
+ function BookAddForm({handleAddClick, handleSearchClick, isLoading}:{handleAddClick: MouseEventHandler, handleSearchClick: MouseEventHandler, isLoading: boolean}){
   return(
       <form className='book-add-form'> 
         <div className="input-wrapper">
           <label className="label" htmlFor="isbn">ISBN</label>
           <div className="input-inner">
             <input type="number" name="isbn" id="isbn" className="isbn" />
-            <BookSearchButton className='' id='search-button' value='Search' handleSearchClick={handleSearchClick}>
+            <BookSearchButton className='' id='search-button' value='Search' handleSearchClick={handleSearchClick} isLoading={isLoading}>
               <i className="fas fa-search search-icon" id="search-icon"></i>
             </BookSearchButton>
 
@@ -81,7 +83,7 @@ function SectionRadioInput({value, name, checked}:{value:string, name:string, ch
           </div>
         </div>
 
-        <BookAddButton value='Add' className='page-button' id='add-button' handleAddClick={handleAddClick}>
+        <BookAddButton value='Add' className='page-button' id='add-button' handleAddClick={handleAddClick} isLoading={isLoading}>
           Add
         </BookAddButton>
       </form>
@@ -89,10 +91,10 @@ function SectionRadioInput({value, name, checked}:{value:string, name:string, ch
   )
 }
 
-export default function AddingTab({handleAddClick, handleSearchClick}: {handleAddClick:MouseEventHandler, handleSearchClick:MouseEventHandler}){
+export default function AddingTab({handleAddClick, handleSearchClick, isLoading}: {handleAddClick:MouseEventHandler, handleSearchClick:MouseEventHandler, isLoading:boolean}){
   return(
     <section className={`main-page adding-page active-page`}>
-      <BookAddForm handleAddClick={handleAddClick} handleSearchClick={handleSearchClick}></BookAddForm>
+      <BookAddForm handleAddClick={handleAddClick} handleSearchClick={handleSearchClick} isLoading={isLoading}></BookAddForm>
     </section>
   )
 }

@@ -161,11 +161,17 @@ nav {
       height: 58px;
       padding: 1.25rem;
       background-color: $purple;
-    }
-    .search-icon {
-      background-color: $purple;
-      color: #fff;
-      pointer-events: none;
+      .search-icon {
+        background-color: $purple;
+        color: #fff;
+        pointer-events: none;
+      }
+      &:disabled{
+        opacity: 0.6;
+        .search-icon {
+          opacity: 0.6;
+        }
+      }
     }
     &.sections{
       display: flex;
@@ -223,6 +229,9 @@ nav {
   background-color: $purple;
   color: #fff;
   margin: 3rem auto 2rem auto;
+  &:disabled{
+    opacity: 0.6;
+  }
 }
 
 .book-page {

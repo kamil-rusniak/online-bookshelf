@@ -94,7 +94,7 @@ function Tabs(){
     status:'to-read'
   }];
 
-// 9781408855652 - one author
+// 9781408855652 0545596270 - one author
 // 1780894554 - 2 author but one author key so counts as one author
 // 9780063088146 - 5 'separate' authors
 
@@ -213,7 +213,7 @@ function Tabs(){
       interface Author{
         key: string
       }
-      
+
       setIsLoading(false);
 
       authorKeysArray.forEach((author:Author) => {
@@ -268,7 +268,7 @@ function Tabs(){
       {isLoading && <Spinner />}
       
       {activeTab == 'add-books' ? (
-        <AddingTab handleAddClick={handleAddClick} handleSearchClick={handleSearchClick}></AddingTab>
+        <AddingTab handleAddClick={handleAddClick} handleSearchClick={handleSearchClick} isLoading={isLoading}></AddingTab>
         ) : (
         <BooksTab bookList={toReadBookList} ></BooksTab>
       )}

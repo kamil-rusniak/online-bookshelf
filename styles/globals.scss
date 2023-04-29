@@ -34,8 +34,25 @@ body {
   height: 100%;
   min-height: 100%;
 }
+
 #__next{
   width: 100%;
+}
+
+.spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+}
+
+.loading-circle {
+  border: 7px solid rgba(63, 61, 86, 0.2);
+  border-top: 7px solid #ff9463;
+  border-radius: 50%;
+  width: 65px;
+  height: 65px;
+  animation: spinner 1.15s linear infinite;
 }
 
 .title {
@@ -430,6 +447,15 @@ footer {
   to {
     visibility: visible;
     opacity: 1;
+  }
+}
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
 

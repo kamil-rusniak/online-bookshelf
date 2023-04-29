@@ -5,6 +5,7 @@ import { getBookJson, getAuthor } from './api/openlibrary';
 import BookElement from './components/BookElement';
 import AddingTab from '././components/AddingTab'
 import BooksTab from '././components/BooksTab'
+import Spinner from './components/Spinner';
 
 type BookObject = {
   id: number,
@@ -101,6 +102,7 @@ function Tabs(){
   // do it only for first time and then read from local storage and setBookList to something from local storage
   // when switching book don't move them around in between different lists or change IDs or something - just update the status
   const [bookList, setBookList] = useState(bookListObject);
+  const [isLoading, setIsLoading] = useState(false);
 
   let toReadBookList = bookList.map((book:BookObject) =>
     <BookElement
@@ -193,7 +195,7 @@ function Tabs(){
 
   function handleSearchClick(e:React.MouseEvent<Element, MouseEvent>){
     e.preventDefault();
-
+    setIsLoading(true);
     const target = e.target as Element;
     const searchForm = (target as HTMLFormElement).form;
     const formData = new FormData(searchForm);
@@ -211,6 +213,8 @@ function Tabs(){
       interface Author{
         key: string
       }
+      
+      setIsLoading(false);
 
       authorKeysArray.forEach((author:Author) => {
           getAuthor(author.key).then((result) => {
@@ -237,6 +241,7 @@ function Tabs(){
     })
     .catch((err) => {
       console.log(err);
+      setIsLoading(false);
     });
 
     searchForm.reset();
@@ -260,6 +265,8 @@ function Tabs(){
         <NavigationTabButton value='my-books' className={`book-page-button ${activeTab == 'my-books' ? 'active-btn': ''}`} content='My books' onTabClick={(e) => handleTabClick(e)} />
       </nav>
 
+      {isLoading && <Spinner />}
+      
       {activeTab == 'add-books' ? (
         <AddingTab handleAddClick={handleAddClick} handleSearchClick={handleSearchClick}></AddingTab>
         ) : (

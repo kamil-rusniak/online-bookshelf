@@ -6,6 +6,7 @@ import BookElement from './components/BookElement';
 import AddingTab from '././components/AddingTab'
 import BooksTab from '././components/BooksTab'
 import Spinner from './components/Spinner';
+import ErrorMessage from './components/ErrorMessage';
 
 type BookObject = {
   id: number,
@@ -96,6 +97,7 @@ function Tabs(){
 
 // 9781408855652 0545596270 - one author
 // 1780894554 - 2 author but one author key so counts as one author
+// 1501192272 - 2 'separate' authors
 // 9780063088146 - 5 'separate' authors
 
 
@@ -103,6 +105,7 @@ function Tabs(){
   // when switching book don't move them around in between different lists or change IDs or something - just update the status
   const [bookList, setBookList] = useState(bookListObject);
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
 
   let toReadBookList = bookList.map((book:BookObject) =>
     <BookElement
@@ -166,6 +169,7 @@ function Tabs(){
 
   function handleAddClick(e:React.MouseEvent<Element, MouseEvent>){
     e.preventDefault();
+    setErrorMsg('');
     
     const target = e.target as Element;
     const addForm = (target as HTMLFormElement).form;
@@ -195,6 +199,7 @@ function Tabs(){
 
   function handleSearchClick(e:React.MouseEvent<Element, MouseEvent>){
     e.preventDefault();
+    setErrorMsg('');
     setIsLoading(true);
     const target = e.target as Element;
     const searchForm = (target as HTMLFormElement).form;
@@ -242,6 +247,7 @@ function Tabs(){
     .catch((err) => {
       console.log(err);
       setIsLoading(false);
+      setErrorMsg('Unable to fetch book data')
     });
 
     searchForm.reset();
@@ -266,6 +272,7 @@ function Tabs(){
       </nav>
 
       {isLoading && <Spinner />}
+      {errorMsg && <ErrorMessage message={errorMsg} setErrorMsg={setErrorMsg}/>}
       
       {activeTab == 'add-books' ? (
         <AddingTab handleAddClick={handleAddClick} handleSearchClick={handleSearchClick} isLoading={isLoading}></AddingTab>
@@ -298,9 +305,7 @@ export default function Home() {
         <h1 className="title">Online <i className="fas fa-book orange"></i> Bookshelf</h1>
       </header>
 
-      <p id="alert" className="hidden"></p>
       <Tabs/>
-
 
       <footer>
         <a href="https://kamilrusniak.com" target='_blank' rel='noreferrer'>Made by Kamil Ruśniak</a>

@@ -62,11 +62,23 @@ body {
   text-align: center;
 }
 
-#alert {
+#error-message {
   color: red;
   border: 1px solid red;
-  padding: 1rem;
+  padding: 1.3rem 2rem;
   font-size: 2rem;
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+
+  .close{
+    cursor: pointer;
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 1.3rem;
+  }
 }
 
 .hidden {

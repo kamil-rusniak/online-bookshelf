@@ -82,7 +82,7 @@ export default function BookDetailsWindow({title, author, publisher, genre, isbn
               />
             </div>
           }
- 
+
         </div>
       </div>
   )

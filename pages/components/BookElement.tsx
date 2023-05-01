@@ -2,7 +2,6 @@ import { MouseEventHandler, useState } from "react"
 import BookDetailsWindow from "./BookDetailsWindow"
 
 function BookButtons({onSwitch, onDelete, onInfo}:{onSwitch:Function, onDelete:MouseEventHandler, onInfo:MouseEventHandler}){
-  
   return(
     <div className="book-buttons">
       <BookInfoButton onInfo={(e) => onInfo(e)}></BookInfoButton>
@@ -32,12 +31,10 @@ function BookInfoButton({onInfo}:{onInfo:MouseEventHandler}){
 }
 
 
-
 export default function BookElement({title, author, publisher, genre, isbn, onSwitch, onDelete, handleEdit}:{title: string, author: string, publisher: string, genre: string, isbn:string, status: string, onSwitch:Function, onDelete:MouseEventHandler, handleEdit: Function}){
   const [showDetails, setShowDetails] = useState(false);
 
   function handleInfo(){
-    console.log(title);
     setShowDetails(true);
   }
 

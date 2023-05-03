@@ -2,11 +2,11 @@ import Head from 'next/head'
 import Script from 'next/script'
 import { useState, MouseEventHandler } from 'react';
 import { getBookJson, getAuthor } from './api/openlibrary';
-import BookElement from './components/BookElement';
-import AddingTab from '././components/AddingTab'
-import BooksTab from '././components/BooksTab'
-import Spinner from './components/Spinner';
-import ErrorMessage from './components/ErrorMessage';
+import BookElement from '../components/BookElement';
+import AddingTab from '../components/AddingTab'
+import BooksTab from '../components/BooksTab'
+import Spinner from '../components/Spinner';
+import ErrorMessage from '../components/ErrorMessage';
 
 type BookObject = {
   id: number,

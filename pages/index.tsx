@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import Script from 'next/script'
-import { useState, MouseEventHandler } from 'react';
+import { useState, MouseEventHandler, useEffect } from 'react';
 import { getBookJson, getAuthor } from './api/openlibrary';
 import BookElement from '../components/BookElement';
 import AddingTab from '../components/AddingTab'
@@ -223,7 +223,7 @@ function Tabs(){
 
 
 export default function Home() {
-
+  
   return (
     <>
       <Head>

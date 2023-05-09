@@ -1,12 +1,27 @@
 import Head from 'next/head'
 import Script from 'next/script'
 import { useState, MouseEventHandler, useEffect } from 'react';
+import type { GetServerSideProps } from "next";
+import prisma from '../lib/prisma'
 import { getBookJson, getAuthor } from './api/openlibrary';
 import BookElement from '../components/BookElement';
 import AddingTab from '../components/AddingTab'
 import BooksTab from '../components/BooksTab'
 import Spinner from '../components/Spinner';
 import ErrorMessage from '../components/ErrorMessage';
+
+
+export const getServerSideProps: GetServerSideProps = async () => {
+
+  const allBooksFromDb = await prisma.book.findMany()
+  // console.log(allBooksFromDb)
+
+  return {
+    props: {
+      dbBookList: JSON.parse(JSON.stringify(allBooksFromDb)) // need that JSON function because otherwise it cant get the date object from the database
+    },
+  };
+};
 
 type BookObject = {
   id: number,
@@ -222,7 +237,7 @@ function Tabs(){
 }
 
 
-export default function Home() {
+export default function Home({dbBookList}:{dbBookList:any}) {
   
   return (
     <>
@@ -241,6 +256,12 @@ export default function Home() {
       <header>
         <h1 className="title">Online <i className="fas fa-book orange"></i> Bookshelf</h1>
       </header>
+
+      {dbBookList.map((book:any) => (
+        <div key={book.id} className="book">
+          <p>{book.title}</p>
+        </div>
+      ))}
 
       <Tabs/>
 

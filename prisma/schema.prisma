@@ -7,3 +7,24 @@ datasource db {
   url          = env("DATABASE_URL")
   relationMode = "prisma"
 }
+
+model Book {
+  id        Int      @id @default(autoincrement())
+  title     String?  @db.VarChar(255)
+  author    String?  @db.VarChar(200)
+  isbn      String?  @db.VarChar(30)
+  publisher String?  @db.VarChar(200)
+  genre     String?  @db.VarChar(200)
+  status    String?  @db.VarChar(10)
+  userId    Int?
+  createdAt DateTime @default(now()) @db.Timestamp(0)
+
+  @@index([userId], map: "userId_idx")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique(map: "username") @db.VarChar(60)
+  email     String   @unique(map: "email") @db.VarChar(255)
+  createdAt DateTime @default(now()) @db.Timestamp(0)
+}

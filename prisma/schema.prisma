@@ -1,3 +1,6 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -9,22 +12,70 @@ datasource db {
 }
 
 model Book {
-  id        Int      @id @default(autoincrement())
-  title     String?  @db.VarChar(255)
-  author    String?  @db.VarChar(200)
-  isbn      String?  @db.VarChar(30)
-  publisher String?  @db.VarChar(200)
-  genre     String?  @db.VarChar(200)
-  status    String?  @db.VarChar(10)
-  userId    Int?
-  createdAt DateTime @default(now()) @db.Timestamp(0)
+  id        String   @id @default(uuid())
+  userId    String
+  content   String
+  title     String
+  author    String
+  isbn      String
+  publisher String
+  genre     String
+  status    String
+  createdAt DateTime @default(now())
 
-  @@index([userId], map: "userId_idx")
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([createdAt, id])
+  @@index([userId])
+}
+
+// Necessary for Next Auth
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  username  String   @unique(map: "username") @db.VarChar(60)
-  email     String   @unique(map: "email") @db.VarChar(255)
-  createdAt DateTime @default(now()) @db.Timestamp(0)
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+
+  // Non-Next Auth
+  books Book[]
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
 }

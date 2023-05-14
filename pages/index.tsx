@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Script from 'next/script'
 import { useState, MouseEventHandler, useEffect } from 'react';
+import { useSession, signIn, signOut } from "next-auth/react"
 import type { GetServerSideProps } from "next";
 import prisma from '../lib/prisma'
 import { getBookJson, getAuthor } from './api/openlibrary';
@@ -238,7 +239,9 @@ function Tabs(){
 
 
 export default function Home() {
-  
+  const { data: session } = useSession()
+  const user = session?.user;
+
   return (
     <>
       <Head>
@@ -257,7 +260,24 @@ export default function Home() {
         <h1 className="title">Online <i className="fas fa-book orange"></i> Bookshelf</h1>
       </header>
 
-      <Tabs/>
+      {user ? (
+        <>
+          <div className="auth-wrapper logout">
+            <p>Signed in as {user.email}</p>
+            <button className='auth-button' onClick={() => signOut()}>Sign out</button>
+          </div>
+          <Tabs/>
+        </>
+      ) : (
+        <>
+          <div className="auth-wrapper login">
+            <button className='auth-button' onClick={() => signIn()}>Sign in</button>  
+          </div>
+        </>
+      )}
+
+
+
 
       <footer>
         <a href="https://kamilrusniak.com" target='_blank' rel='noreferrer'>Made by Kamil Ruśniak</a>

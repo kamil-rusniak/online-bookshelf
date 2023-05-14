@@ -128,14 +128,14 @@ function Tabs(){
     const formData = new FormData(addForm);
     const formJson = Object.fromEntries(formData.entries());
     const title = formJson.title as string;
-    const author = formJson.author as string;
+    const authors = formJson.author as string;
     const publisher = formJson.publisher as string;
     const genre = formJson.genre as string;
     const isbn = formJson.isbn as string;
     const status = formJson.section as string;
 
     try {
-      const body = { title, author, isbn, publisher, genre, status };
+      const body = { title, authors, isbn, publisher, genre, status };
       await fetch(`/api/book`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -148,7 +148,7 @@ function Tabs(){
     addForm.reset();
   }
 
-  function handleSearchClick(e:React.MouseEvent<Element, MouseEvent>){
+  async function handleSearchClick(e:React.MouseEvent<Element, MouseEvent>){
     e.preventDefault();
     setErrorMsg('');
     setIsLoading(true);
@@ -158,11 +158,11 @@ function Tabs(){
     const formData = new FormData(searchForm);
     const formJson = Object.fromEntries(formData.entries());
 
-    getBookJson(formJson.isbn).then((result) => {
+    getBookJson(formJson.isbn).then(async (result) => {
       let authorsArray:string[] = [];
 
       const title = result.title;
-      const publisher = result.publishers;
+      const publisherResult = result.publishers;
       const authorKeysArray = result.authors;
       const genre = formJson.genre as string;
       const isbn = formJson.isbn as string;
@@ -171,30 +171,42 @@ function Tabs(){
         key: string
       }
 
+      const publisher = publisherResult.join(', ');
       setIsLoading(false);
 
-      authorKeysArray.forEach((author:Author) => {
-          getAuthor(author.key).then((result) => {
-            const authorName = result.name;
-            authorsArray.push(` ${authorName}`);
+      function getAuthorsString(){
+        return new Promise(resolve => {
+          authorKeysArray.forEach((author:Author) => {
+            getAuthor(author.key).then((result) => {
+              const authorName = result.name;
+              authorsArray.push(`${authorName}`);
+              if(authorsArray.length === authorKeysArray.length){
+                const authorsString = authorsArray.join(', ');
+                resolve(authorsString);
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+            });  
+          });  
+        });
+      }
 
-            let newBookList:BookObject[] = [...bookList];
-            newBookList = [...newBookList, { 
-              id: bookList.length + 1,
-              title: title,
-              author: authorsArray.toString(),
-              publisher: publisher,
-              genre: genre,
-              isbn: isbn,
-              status: status
-            }];
-            setBookList(newBookList);
+      const authors = await getAuthorsString();
 
-          })
-          .catch((err) => {
-            console.log(err);
-          });      
-      });     
+      if (authors){
+        console.log(authors);
+        try {
+          const body = { title, authors, isbn, publisher, genre, status };
+          await fetch(`/api/book`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body),
+          });
+        } catch (error) {
+          console.error(error);
+        }
+      }  
     })
     .catch((err) => {
       console.log(err);

@@ -7,7 +7,7 @@ import { authOptions } from "../auth/[...nextauth]"
 // POST /api/book
 // Temporarily everything is optional in req.body (but status is always passed)
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
-    const { title, author, isbn, publisher, genre, status } = req.body;
+    const { title, authors, isbn, publisher, genre, status } = req.body;
     const session = await getServerSession(req, res, authOptions)
 
     if (session) {
@@ -15,7 +15,7 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
             data: {
                 userId: session.user.id,
                 title: title,
-                author: author,
+                author: authors,
                 isbn: isbn,
                 publisher: publisher,
                 genre: genre,

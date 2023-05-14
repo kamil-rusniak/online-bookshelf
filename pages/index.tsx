@@ -119,7 +119,7 @@ function Tabs(){
     setBookList(newBookList);
   }
 
-  function handleAddClick(e:React.MouseEvent<Element, MouseEvent>){
+  async function handleAddClick(e:React.MouseEvent<Element, MouseEvent>){
     e.preventDefault();
     setErrorMsg('');
     
@@ -134,18 +134,17 @@ function Tabs(){
     const isbn = formJson.isbn as string;
     const status = formJson.section as string;
 
-    let newBookList:BookObject[] = [...bookList];
-    newBookList = [...newBookList, { 
-      id: bookList.length + 1,
-      title: title,
-      author: author,
-      publisher: publisher,
-      genre: genre,
-      isbn: isbn,
-      status: status
-     }];
-    setBookList(newBookList);
-
+    try {
+      const body = { title, author, isbn, publisher, genre, status };
+      await fetch(`/api/book`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+    } catch (error) {
+      console.error(error);
+    }
+    
     addForm.reset();
   }
 

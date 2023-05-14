@@ -237,7 +237,7 @@ function Tabs(){
 }
 
 
-export default function Home({dbBookList}:{dbBookList:any}) {
+export default function Home() {
   
   return (
     <>

@@ -257,12 +257,6 @@ export default function Home({dbBookList}:{dbBookList:any}) {
         <h1 className="title">Online <i className="fas fa-book orange"></i> Bookshelf</h1>
       </header>
 
-      {dbBookList.map((book:any) => (
-        <div key={book.id} className="book">
-          <p>{book.title}</p>
-        </div>
-      ))}
-
       <Tabs/>
 
       <footer>

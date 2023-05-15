@@ -2,8 +2,6 @@ import Head from 'next/head'
 import Script from 'next/script'
 import { useState, MouseEventHandler, useEffect } from 'react';
 import { useSession, signIn, signOut } from "next-auth/react"
-import type { GetServerSideProps } from "next";
-import prisma from '../lib/prisma'
 import { getBookJson, getAuthor } from './api/openlibrary';
 import BookElement from '../components/BookElement';
 import AddingTab from '../components/AddingTab'
@@ -12,17 +10,6 @@ import Spinner from '../components/Spinner';
 import ErrorMessage from '../components/ErrorMessage';
 
 
-export const getServerSideProps: GetServerSideProps = async () => {
-
-  const allBooksFromDb = await prisma.book.findMany()
-  // console.log(allBooksFromDb)
-
-  return {
-    props: {
-      dbBookList: JSON.parse(JSON.stringify(allBooksFromDb)) // need that JSON function because otherwise it cant get the date object from the database
-    },
-  };
-};
 
 type BookObject = {
   id: number,
@@ -47,23 +34,30 @@ function NavigationTabButton({value, content, onTabClick, className}: {value: st
 }
 
 function Tabs(){
-  const bookListObject:BookObject[] = [{
-    id: 0,
-    title: `To read book title`,
-    author: `Book Author`,
-    publisher: 'Publisher',
-    genre: 'Fantasy',
-    isbn: '',
-    status:'to-read'
-  }];
-
-
-
-  const [bookList, setBookList] = useState(bookListObject);
+  const [booksFromDb, setBooksFromDb] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
-  let toReadBookList = bookList.map((book:BookObject) =>
+
+  async function getBooks() {
+    try {
+      const res = await fetch(`/api/getBooks`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      const data = await res.json();
+      console.log(data);
+      setBooksFromDb(data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    getBooks();
+  }, [])
+
+  let bookList = booksFromDb.map((book:BookObject) =>
     <BookElement
       key={book.id} 
       title={book.title} 
@@ -79,44 +73,43 @@ function Tabs(){
   );
 
   function handleSwitch(switchType:string, bookId:number){
+    // let newBooksFromDb:BookObject[] = [...booksFromDb];
+    // let targetBook = newBooksFromDb.find((book:BookObject) => book.id === bookId);
 
-    let newBookList:BookObject[] = [...bookList];
-    let targetBook = newBookList.find((book:BookObject) => book.id === bookId);
+    // if(targetBook != undefined){
+    //   if(targetBook.status === 'to-read'){
+    //     targetBook.status = 'reading';
+    //   } else if(targetBook.status === 'reading'){
+    //     if (switchType === 'up'){
+    //       targetBook.status = 'to-read';
+    //     } else{
+    //       targetBook.status = 'finished';
+    //     }
+    //   } else {
+    //     targetBook.status = 'reading';
+    //   }
+    // }
 
-    if(targetBook != undefined){
-      if(targetBook.status === 'to-read'){
-        targetBook.status = 'reading';
-      } else if(targetBook.status === 'reading'){
-        if (switchType === 'up'){
-          targetBook.status = 'to-read';
-        } else{
-          targetBook.status = 'finished';
-        }
-      } else {
-        targetBook.status = 'reading';
-      }
-    }
-
-    setBookList(newBookList);
+    // setBooksFromDb(newBooksFromDb);
   }
 
   
   function handleDelete(bookId:number){
-    let newBookList:BookObject[] = [...bookList];
-    newBookList = newBookList.filter((book:BookObject) => book.id !== bookId);
-    setBookList(newBookList);
+    // let newBooksFromDb:BookObject[] = [...booksFromDb];
+    // newBooksFromDb = newBooksFromDb.filter((book:BookObject) => book.id !== bookId);
+    // // setBooksFromDb(newBooksFromDb);
   }
 
   function handleEdit(e:Event, bookId:number, fieldType:string){
-    let newBookList:BookObject[] = [...bookList];
-    let targetBook = newBookList.find((book:BookObject) => book.id === bookId);
+    // let newBooksFromDb:BookObject[] = [...booksFromDb];
+    // let targetBook = newBooksFromDb.find((book:BookObject) => book.id === bookId);
 
-    if (targetBook != undefined){
-      // @ts-ignore
-      targetBook[fieldType] = e.target.value;
-    }
+    // if (targetBook != undefined){
+    //   // @ts-ignore
+    //   targetBook[fieldType] = e.target.value;
+    // }
 
-    setBookList(newBookList);
+    // setBooksFromDb(newBooksFromDb);
   }
 
   async function handleAddClick(e:React.MouseEvent<Element, MouseEvent>){
@@ -241,7 +234,7 @@ function Tabs(){
       {activeTab == 'add-books' ? (
         <AddingTab handleAddClick={handleAddClick} handleSearchClick={handleSearchClick} isLoading={isLoading}></AddingTab>
         ) : (
-        <BooksTab bookList={toReadBookList} ></BooksTab>
+        <BooksTab bookList={bookList}></BooksTab>
       )}
     </>
 

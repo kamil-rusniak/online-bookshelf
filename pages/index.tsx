@@ -134,6 +134,7 @@ function Tabs(){
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
+      getBooks();
     } catch (error) {
       console.error(error);
     }
@@ -196,6 +197,7 @@ function Tabs(){
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(body),
           });
+          getBooks();
         } catch (error) {
           console.error(error);
         }

@@ -94,10 +94,15 @@ function Tabs(){
   }
 
   
-  function handleDelete(bookId:number){
-    // let newBooksFromDb:BookObject[] = [...booksFromDb];
-    // newBooksFromDb = newBooksFromDb.filter((book:BookObject) => book.id !== bookId);
-    // // setBooksFromDb(newBooksFromDb);
+  async function handleDelete(bookId:number){
+    try {
+      await fetch(`/api/book/${bookId}`, {
+        method: "DELETE",
+      });
+      getBooks();
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   function handleEdit(e:Event, bookId:number, fieldType:string){

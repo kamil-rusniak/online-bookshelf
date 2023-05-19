@@ -4,7 +4,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '../auth/[...nextauth]';
 
 
-// DELETE /api/book/:id
+// fetch /api/book/:id
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
     const bookId = req.query.id as string;
 
@@ -15,6 +15,25 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
             const book = await prisma.book.delete({
                 where: {
                     id: bookId,
+                },
+            });
+            res.json(book);
+        } else {
+            res.status(401).send({ message: 'Unauthorized' })
+        }
+    } else if (req.method === "PUT") {
+        const { title, authors, isbn, publisher, genre } = req.body;
+        if (session) {
+            const book = await prisma.book.update({
+                where: {
+                    id: bookId,
+                },
+                data: {
+                    title: title,
+                    author: authors,
+                    isbn: isbn,
+                    publisher: publisher,
+                    genre: genre,
                 },
             });
             res.json(book);

@@ -12,7 +12,7 @@ import ErrorMessage from '../components/ErrorMessage';
 
 
 type BookObject = {
-  id: number,
+  id: string,
   title: string,
   author: string,
   publisher: string,
@@ -60,6 +60,7 @@ function Tabs(){
   let bookList = booksFromDb.map((book:BookObject) =>
     <BookElement
       key={book.id} 
+      id={book.id}
       title={book.title} 
       author={book.author} 
       isbn={book.isbn} 
@@ -68,11 +69,11 @@ function Tabs(){
       status={book.status} 
       onSwitch={(switchType:string) => handleSwitch(switchType, book.id)} 
       onDelete={() => handleDelete(book.id)}
-      handleEdit={(e:Event, fieldType:string) => handleEdit(e, book.id, fieldType)}
+      handleEdit={(e) => handleEdit(e, book.id)}
     />
   );
 
-  function handleSwitch(switchType:string, bookId:number){
+  function handleSwitch(switchType:string, bookId:string){
     // let newBooksFromDb:BookObject[] = [...booksFromDb];
     // let targetBook = newBooksFromDb.find((book:BookObject) => book.id === bookId);
 
@@ -94,7 +95,7 @@ function Tabs(){
   }
 
   
-  async function handleDelete(bookId:number){
+  async function handleDelete(bookId:string){
     try {
       await fetch(`/api/book/${bookId}`, {
         method: "DELETE",
@@ -105,16 +106,31 @@ function Tabs(){
     }
   }
 
-  function handleEdit(e:Event, bookId:number, fieldType:string){
-    // let newBooksFromDb:BookObject[] = [...booksFromDb];
-    // let targetBook = newBooksFromDb.find((book:BookObject) => book.id === bookId);
+  async function handleEdit(e:React.MouseEvent<Element, MouseEvent>, bookId:string){
+    e.preventDefault();
 
-    // if (targetBook != undefined){
-    //   // @ts-ignore
-    //   targetBook[fieldType] = e.target.value;
-    // }
+    const target = e.target as Element;
+    const editForm = (target as HTMLFormElement).form;
 
-    // setBooksFromDb(newBooksFromDb);
+    const formData = new FormData(editForm);
+    const formJson = Object.fromEntries(formData.entries());
+    const title = formJson.title as string;
+    const authors = formJson.author as string;
+    const publisher = formJson.publisher as string;
+    const genre = formJson.genre as string;
+    const isbn = formJson.isbn as string;
+      
+    try {
+      const body = { title, authors, isbn, publisher, genre };
+      await fetch(`/api/book/${bookId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      getBooks();
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   async function handleAddClick(e:React.MouseEvent<Element, MouseEvent>){

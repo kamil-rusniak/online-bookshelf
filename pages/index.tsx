@@ -67,31 +67,36 @@ function Tabs(){
       publisher={book.publisher} 
       genre={book.genre} 
       status={book.status} 
-      onSwitch={(switchType:string) => handleSwitch(switchType, book.id)} 
+      onSwitch={(switchType:string) => handleSwitch(switchType, book.id, book.status)} 
       onDelete={() => handleDelete(book.id)}
       handleEdit={(e) => handleEdit(e, book.id)}
     />
   );
 
-  function handleSwitch(switchType:string, bookId:string){
-    // let newBooksFromDb:BookObject[] = [...booksFromDb];
-    // let targetBook = newBooksFromDb.find((book:BookObject) => book.id === bookId);
+  async function handleSwitch(switchType:string, bookId:string, status:string){
+    if(status === 'to-read'){
+      status = 'reading';
+    } else if(status === 'reading'){
+      if (switchType === 'up'){
+        status = 'to-read';
+      } else{
+        status = 'finished';
+      }
+    } else {
+      status = 'reading';
+    }
 
-    // if(targetBook != undefined){
-    //   if(targetBook.status === 'to-read'){
-    //     targetBook.status = 'reading';
-    //   } else if(targetBook.status === 'reading'){
-    //     if (switchType === 'up'){
-    //       targetBook.status = 'to-read';
-    //     } else{
-    //       targetBook.status = 'finished';
-    //     }
-    //   } else {
-    //     targetBook.status = 'reading';
-    //   }
-    // }
-
-    // setBooksFromDb(newBooksFromDb);
+    try {
+      const body = { status };
+      await fetch(`/api/book/${bookId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      getBooks();
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   

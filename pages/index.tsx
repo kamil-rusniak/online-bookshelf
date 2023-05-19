@@ -1,8 +1,7 @@
 import Head from 'next/head'
 import Script from 'next/script'
 import { useState, MouseEventHandler, useEffect } from 'react';
-import type { GetServerSideProps } from "next";
-import prisma from '../lib/prisma'
+import { useSession, signIn, signOut } from "next-auth/react"
 import { getBookJson, getAuthor } from './api/openlibrary';
 import BookElement from '../components/BookElement';
 import AddingTab from '../components/AddingTab'
@@ -11,20 +10,9 @@ import Spinner from '../components/Spinner';
 import ErrorMessage from '../components/ErrorMessage';
 
 
-export const getServerSideProps: GetServerSideProps = async () => {
-
-  const allBooksFromDb = await prisma.book.findMany()
-  // console.log(allBooksFromDb)
-
-  return {
-    props: {
-      dbBookList: JSON.parse(JSON.stringify(allBooksFromDb)) // need that JSON function because otherwise it cant get the date object from the database
-    },
-  };
-};
 
 type BookObject = {
-  id: number,
+  id: string,
   title: string,
   author: string,
   publisher: string,
@@ -46,79 +34,111 @@ function NavigationTabButton({value, content, onTabClick, className}: {value: st
 }
 
 function Tabs(){
-  const bookListObject:BookObject[] = [{
-    id: 0,
-    title: `To read book title`,
-    author: `Book Author`,
-    publisher: 'Publisher',
-    genre: 'Fantasy',
-    isbn: '',
-    status:'to-read'
-  }];
-
-
-
-  const [bookList, setBookList] = useState(bookListObject);
+  const [booksFromDb, setBooksFromDb] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
-  let toReadBookList = bookList.map((book:BookObject) =>
+
+  async function getBooks() {
+    try {
+      const res = await fetch(`/api/getBooks`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      const data = await res.json();
+      console.log(data);
+      setBooksFromDb(data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    getBooks();
+  }, [])
+
+  let bookList = booksFromDb.map((book:BookObject) =>
     <BookElement
       key={book.id} 
+      id={book.id}
       title={book.title} 
       author={book.author} 
       isbn={book.isbn} 
       publisher={book.publisher} 
       genre={book.genre} 
       status={book.status} 
-      onSwitch={(switchType:string) => handleSwitch(switchType, book.id)} 
+      onSwitch={(switchType:string) => handleSwitch(switchType, book.id, book.status)} 
       onDelete={() => handleDelete(book.id)}
-      handleEdit={(e:Event, fieldType:string) => handleEdit(e, book.id, fieldType)}
+      handleEdit={(e) => handleEdit(e, book.id)}
     />
   );
 
-  function handleSwitch(switchType:string, bookId:number){
-
-    let newBookList:BookObject[] = [...bookList];
-    let targetBook = newBookList.find((book:BookObject) => book.id === bookId);
-
-    if(targetBook != undefined){
-      if(targetBook.status === 'to-read'){
-        targetBook.status = 'reading';
-      } else if(targetBook.status === 'reading'){
-        if (switchType === 'up'){
-          targetBook.status = 'to-read';
-        } else{
-          targetBook.status = 'finished';
-        }
-      } else {
-        targetBook.status = 'reading';
+  async function handleSwitch(switchType:string, bookId:string, status:string){
+    if(status === 'to-read'){
+      status = 'reading';
+    } else if(status === 'reading'){
+      if (switchType === 'up'){
+        status = 'to-read';
+      } else{
+        status = 'finished';
       }
+    } else {
+      status = 'reading';
     }
 
-    setBookList(newBookList);
+    try {
+      const body = { status };
+      await fetch(`/api/book/${bookId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      getBooks();
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   
-  function handleDelete(bookId:number){
-    let newBookList:BookObject[] = [...bookList];
-    newBookList = newBookList.filter((book:BookObject) => book.id !== bookId);
-    setBookList(newBookList);
-  }
-
-  function handleEdit(e:Event, bookId:number, fieldType:string){
-    let newBookList:BookObject[] = [...bookList];
-    let targetBook = newBookList.find((book:BookObject) => book.id === bookId);
-
-    if (targetBook != undefined){
-      // @ts-ignore
-      targetBook[fieldType] = e.target.value;
+  async function handleDelete(bookId:string){
+    try {
+      await fetch(`/api/book/${bookId}`, {
+        method: "DELETE",
+      });
+      getBooks();
+    } catch (error) {
+      console.error(error);
     }
-
-    setBookList(newBookList);
   }
 
-  function handleAddClick(e:React.MouseEvent<Element, MouseEvent>){
+  async function handleEdit(e:React.MouseEvent<Element, MouseEvent>, bookId:string){
+    e.preventDefault();
+
+    const target = e.target as Element;
+    const editForm = (target as HTMLFormElement).form;
+
+    const formData = new FormData(editForm);
+    const formJson = Object.fromEntries(formData.entries());
+    const title = formJson.title as string;
+    const authors = formJson.author as string;
+    const publisher = formJson.publisher as string;
+    const genre = formJson.genre as string;
+    const isbn = formJson.isbn as string;
+      
+    try {
+      const body = { title, authors, isbn, publisher, genre };
+      await fetch(`/api/book/${bookId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      getBooks();
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async function handleAddClick(e:React.MouseEvent<Element, MouseEvent>){
     e.preventDefault();
     setErrorMsg('');
     
@@ -127,28 +147,28 @@ function Tabs(){
     const formData = new FormData(addForm);
     const formJson = Object.fromEntries(formData.entries());
     const title = formJson.title as string;
-    const author = formJson.author as string;
+    const authors = formJson.author as string;
     const publisher = formJson.publisher as string;
     const genre = formJson.genre as string;
     const isbn = formJson.isbn as string;
     const status = formJson.section as string;
 
-    let newBookList:BookObject[] = [...bookList];
-    newBookList = [...newBookList, { 
-      id: bookList.length + 1,
-      title: title,
-      author: author,
-      publisher: publisher,
-      genre: genre,
-      isbn: isbn,
-      status: status
-     }];
-    setBookList(newBookList);
-
+    try {
+      const body = { title, authors, isbn, publisher, genre, status };
+      await fetch(`/api/book`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      getBooks();
+    } catch (error) {
+      console.error(error);
+    }
+    
     addForm.reset();
   }
 
-  function handleSearchClick(e:React.MouseEvent<Element, MouseEvent>){
+  async function handleSearchClick(e:React.MouseEvent<Element, MouseEvent>){
     e.preventDefault();
     setErrorMsg('');
     setIsLoading(true);
@@ -158,11 +178,11 @@ function Tabs(){
     const formData = new FormData(searchForm);
     const formJson = Object.fromEntries(formData.entries());
 
-    getBookJson(formJson.isbn).then((result) => {
+    getBookJson(formJson.isbn).then(async (result) => {
       let authorsArray:string[] = [];
 
       const title = result.title;
-      const publisher = result.publishers;
+      const publisherResult = result.publishers;
       const authorKeysArray = result.authors;
       const genre = formJson.genre as string;
       const isbn = formJson.isbn as string;
@@ -171,30 +191,43 @@ function Tabs(){
         key: string
       }
 
+      const publisher = publisherResult.join(', ');
       setIsLoading(false);
 
-      authorKeysArray.forEach((author:Author) => {
-          getAuthor(author.key).then((result) => {
-            const authorName = result.name;
-            authorsArray.push(` ${authorName}`);
+      function getAuthorsString(){
+        return new Promise(resolve => {
+          authorKeysArray.forEach((author:Author) => {
+            getAuthor(author.key).then((result) => {
+              const authorName = result.name;
+              authorsArray.push(`${authorName}`);
+              if(authorsArray.length === authorKeysArray.length){
+                const authorsString = authorsArray.join(', ');
+                resolve(authorsString);
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+            });  
+          });  
+        });
+      }
 
-            let newBookList:BookObject[] = [...bookList];
-            newBookList = [...newBookList, { 
-              id: bookList.length + 1,
-              title: title,
-              author: authorsArray.toString(),
-              publisher: publisher,
-              genre: genre,
-              isbn: isbn,
-              status: status
-            }];
-            setBookList(newBookList);
+      const authors = await getAuthorsString();
 
-          })
-          .catch((err) => {
-            console.log(err);
-          });      
-      });     
+      if (authors){
+        console.log(authors);
+        try {
+          const body = { title, authors, isbn, publisher, genre, status };
+          await fetch(`/api/book`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body),
+          });
+          getBooks();
+        } catch (error) {
+          console.error(error);
+        }
+      }  
     })
     .catch((err) => {
       console.log(err);
@@ -229,7 +262,7 @@ function Tabs(){
       {activeTab == 'add-books' ? (
         <AddingTab handleAddClick={handleAddClick} handleSearchClick={handleSearchClick} isLoading={isLoading}></AddingTab>
         ) : (
-        <BooksTab bookList={toReadBookList} ></BooksTab>
+        <BooksTab bookList={bookList}></BooksTab>
       )}
     </>
 
@@ -237,8 +270,10 @@ function Tabs(){
 }
 
 
-export default function Home({dbBookList}:{dbBookList:any}) {
-  
+export default function Home() {
+  const { data: session } = useSession()
+  const user = session?.user;
+
   return (
     <>
       <Head>
@@ -257,13 +292,24 @@ export default function Home({dbBookList}:{dbBookList:any}) {
         <h1 className="title">Online <i className="fas fa-book orange"></i> Bookshelf</h1>
       </header>
 
-      {dbBookList.map((book:any) => (
-        <div key={book.id} className="book">
-          <p>{book.title}</p>
-        </div>
-      ))}
+      {user ? (
+        <>
+          <div className="auth-wrapper logout">
+            <p>Signed in as {user.email}</p>
+            <button className='auth-button' onClick={() => signOut()}>Sign out</button>
+          </div>
+          <Tabs/>
+        </>
+      ) : (
+        <>
+          <div className="auth-wrapper login">
+            <button className='auth-button' onClick={() => signIn()}>Sign in</button>  
+          </div>
+        </>
+      )}
 
-      <Tabs/>
+
+
 
       <footer>
         <a href="https://kamilrusniak.com" target='_blank' rel='noreferrer'>Made by Kamil Ruśniak</a>

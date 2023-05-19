@@ -1,14 +1,14 @@
 import Image from 'next/image';
-import { ChangeEvent, ChangeEventHandler, Dispatch, SetStateAction } from 'react';
+import { Dispatch, MouseEventHandler, SetStateAction } from 'react';
 
 
-function BookDetailsInput({value, fieldType, handleEdit, autofocus}:{value: string, fieldType: string, handleEdit: Function, autofocus: boolean}){
+function BookDetailsInput({value, fieldType, autofocus}:{value: string, fieldType: string, autofocus: boolean}){
   return(
-    <input autoFocus={autofocus} onChange={(e:ChangeEvent<HTMLInputElement>) => handleEdit(e, fieldType)} type="text" className="book-details-input"  id={`book-details-${fieldType}`} value={value}/>
+    <input autoFocus={autofocus} type="text" name={fieldType} className="book-details-input" id={`book-details-${fieldType}`} defaultValue={value}/>
   )
 }
 
-export default function BookDetailsWindow({title, author, publisher, genre, isbn, showDetails, setShowDetails, handleEdit}:{title:string, author:string, publisher: string, genre: string, isbn: string, showDetails:boolean, setShowDetails:Dispatch<SetStateAction<boolean>>, handleEdit: Function}){
+export default function BookDetailsWindow({id, title, author, publisher, genre, isbn, showDetails, setShowDetails, handleEdit}:{id:string, title:string, author:string, publisher: string, genre: string, isbn: string, showDetails:boolean, setShowDetails:Dispatch<SetStateAction<boolean>>, handleEdit: MouseEventHandler}){
 
   function handleClose(e:React.MouseEvent<Element, MouseEvent>){
     const target = e.target as Element;
@@ -25,8 +25,9 @@ export default function BookDetailsWindow({title, author, publisher, genre, isbn
 
   return(
     <div className={'book-details' + `${showDetails && ' active'}`} onMouseDown={(e) => handleClose(e)} onKeyDown={(e) => handleKeyDown(e)} tabIndex={-1}>
-      <div className="book-details-content">
+      <form className="book-details-content">
           <span className="book-details-close">&times;</span>
+          <button className='book-update-button' onClick={handleEdit}>Save</button>
           <div className="book-details-text">
 
             <div className="book-details-text-inner">
@@ -34,7 +35,7 @@ export default function BookDetailsWindow({title, author, publisher, genre, isbn
                 <h2>Title</h2>
               </div>
             
-              <BookDetailsInput autofocus={true} value={title} fieldType='title' handleEdit={(e:ChangeEventHandler<HTMLInputElement>) => handleEdit(e, 'title')}/>
+              <BookDetailsInput autofocus={true} value={title} fieldType='title'/>
               <i className="far fa-check-circle edit-confirm"></i>
             </div>
 
@@ -42,7 +43,7 @@ export default function BookDetailsWindow({title, author, publisher, genre, isbn
               <div className="book-details-header-text">
                 <h2>Author</h2>
               </div>
-              <BookDetailsInput autofocus={false} value={author} fieldType='author' handleEdit={(e:ChangeEventHandler<HTMLInputElement>) => handleEdit(e, 'author')}/>
+              <BookDetailsInput autofocus={false} value={author} fieldType='author'/>
               <i className="far fa-check-circle edit-confirm"></i>
             </div>
 
@@ -50,7 +51,7 @@ export default function BookDetailsWindow({title, author, publisher, genre, isbn
               <div className="book-details-header-text">
                 <h2>Publisher</h2>
               </div>
-              <BookDetailsInput autofocus={false} value={publisher} fieldType='publisher' handleEdit={(e:ChangeEventHandler<HTMLInputElement>) => handleEdit(e,'publisher')}/>
+              <BookDetailsInput autofocus={false} value={publisher} fieldType='publisher'/>
               <i className="far fa-check-circle edit-confirm"></i>
             </div>
 
@@ -58,7 +59,7 @@ export default function BookDetailsWindow({title, author, publisher, genre, isbn
               <div className="book-details-header-text">
                 <h2>Genre</h2>
               </div>
-              <BookDetailsInput autofocus={false} value={genre} fieldType='genre' handleEdit={(e:ChangeEventHandler<HTMLInputElement>) => handleEdit(e,'genre')}/>
+              <BookDetailsInput autofocus={false} value={genre} fieldType='genre'/>
               <i className="far fa-check-circle edit-confirm"></i>
             </div>
 
@@ -66,7 +67,7 @@ export default function BookDetailsWindow({title, author, publisher, genre, isbn
               <div className="book-details-header-text">
                 <h2>ISBN</h2>
               </div>
-              <BookDetailsInput autofocus={false} value={isbn} fieldType='isbn' handleEdit={(e:ChangeEventHandler<HTMLInputElement>) => handleEdit(e, 'isbn')}/>
+              <BookDetailsInput autofocus={false} value={isbn} fieldType='isbn'/>
               <i className="far fa-check-circle edit-confirm"></i>
             </div>
 
@@ -83,7 +84,7 @@ export default function BookDetailsWindow({title, author, publisher, genre, isbn
             </div>
           }
 
-        </div>
+        </form>
       </div>
   )
 }

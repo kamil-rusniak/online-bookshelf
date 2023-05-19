@@ -14,7 +14,6 @@ datasource db {
 model Book {
   id        String   @id @default(uuid())
   userId    String
-  content   String
   title     String
   author    String
   isbn      String

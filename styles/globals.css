@@ -390,6 +390,7 @@ nav {
 }
 .book-details-text {
   width: 60%;
+  position: relative;
 }
 .book-details-text h2 {
   font-size: 1.8rem;
@@ -441,8 +442,26 @@ nav {
   text-decoration: none;
   cursor: pointer;
 }
-.book-details .edit-confirm {
-  display: none;
+.book-details .book-update-button {
+  opacity: 0;
+  font-size: 1rem;
+  padding: 0.3rem 2rem;
+  border: 1px solid #3f3d56;
+  font-weight: 500;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: #fff;
+  margin-top: 0.7rem;
+  transition: background-color 0.25s ease-in-out, color 0.2s ease-in-out, opacity 0.3s ease-in-out;
+  position: absolute;
+  bottom: 0;
+}
+.book-details .book-update-button:hover {
+  background-color: #3f3d56;
+  color: #fff;
+}
+.book-details .book-update-button.active {
+  opacity: 1;
 }
 
 .small-info {

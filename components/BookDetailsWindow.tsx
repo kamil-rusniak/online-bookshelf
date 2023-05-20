@@ -1,14 +1,28 @@
 import Image from 'next/image';
-import { Dispatch, MouseEventHandler, SetStateAction } from 'react';
+import { ChangeEventHandler, Dispatch, MouseEventHandler, SetStateAction, useState } from 'react';
 
 
-function BookDetailsInput({value, fieldType, autofocus}:{value: string, fieldType: string, autofocus: boolean}){
+function BookDetailsInput({value, fieldType, autofocus, handleChange}:{value: string, fieldType: string, autofocus: boolean, handleChange:ChangeEventHandler<HTMLInputElement>}){
   return(
-    <input autoFocus={autofocus} type="text" name={fieldType} className="book-details-input" id={`book-details-${fieldType}`} defaultValue={value}/>
+    <input autoFocus={autofocus} type="text" name={fieldType} className="book-details-input" id={`book-details-${fieldType}`} onChange={handleChange} defaultValue={value}/>
   )
 }
 
 export default function BookDetailsWindow({id, title, author, publisher, genre, isbn, showDetails, setShowDetails, handleEdit}:{id:string, title:string, author:string, publisher: string, genre: string, isbn: string, showDetails:boolean, setShowDetails:Dispatch<SetStateAction<boolean>>, handleEdit: MouseEventHandler}){
+
+  const [showSaveBtn, setShowSaveBtn] = useState(false);
+  const [styleSaveBtn, setStyleSaveBtn] = useState(false);
+
+  function showButton(){
+    if (showSaveBtn === false){
+      setShowSaveBtn(true);
+      if (styleSaveBtn === false){
+        setTimeout(() => {
+          setStyleSaveBtn(true);
+        }, 100);
+      }
+    }
+  }
 
   function handleClose(e:React.MouseEvent<Element, MouseEvent>){
     const target = e.target as Element;
@@ -27,7 +41,6 @@ export default function BookDetailsWindow({id, title, author, publisher, genre, 
     <div className={'book-details' + `${showDetails && ' active'}`} onMouseDown={(e) => handleClose(e)} onKeyDown={(e) => handleKeyDown(e)} tabIndex={-1}>
       <form className="book-details-content">
           <span className="book-details-close">&times;</span>
-          <button className='book-update-button' onClick={handleEdit}>Save</button>
           <div className="book-details-text">
 
             <div className="book-details-text-inner">
@@ -35,41 +48,40 @@ export default function BookDetailsWindow({id, title, author, publisher, genre, 
                 <h2>Title</h2>
               </div>
             
-              <BookDetailsInput autofocus={true} value={title} fieldType='title'/>
-              <i className="far fa-check-circle edit-confirm"></i>
+              <BookDetailsInput autofocus={true} value={title} fieldType='title' handleChange={showButton}/>
             </div>
 
             <div className="book-details-text-inner">
               <div className="book-details-header-text">
                 <h2>Author</h2>
               </div>
-              <BookDetailsInput autofocus={false} value={author} fieldType='author'/>
-              <i className="far fa-check-circle edit-confirm"></i>
+              <BookDetailsInput autofocus={false} value={author} fieldType='author' handleChange={showButton}/>
             </div>
 
             <div className="book-details-text-inner">
               <div className="book-details-header-text">
                 <h2>Publisher</h2>
               </div>
-              <BookDetailsInput autofocus={false} value={publisher} fieldType='publisher'/>
-              <i className="far fa-check-circle edit-confirm"></i>
+              <BookDetailsInput autofocus={false} value={publisher} fieldType='publisher' handleChange={showButton}/>
             </div>
 
             <div className="book-details-text-inner">
               <div className="book-details-header-text">
                 <h2>Genre</h2>
               </div>
-              <BookDetailsInput autofocus={false} value={genre} fieldType='genre'/>
-              <i className="far fa-check-circle edit-confirm"></i>
+              <BookDetailsInput autofocus={false} value={genre} fieldType='genre' handleChange={showButton}/>
             </div>
 
             <div className="book-details-text-inner">
               <div className="book-details-header-text">
                 <h2>ISBN</h2>
               </div>
-              <BookDetailsInput autofocus={false} value={isbn} fieldType='isbn'/>
-              <i className="far fa-check-circle edit-confirm"></i>
+              <BookDetailsInput autofocus={false} value={isbn} fieldType='isbn' handleChange={showButton}/>
             </div>
+
+            {showSaveBtn && 
+             <button className={`book-update-button ${styleSaveBtn && 'active'}`} onClick={handleEdit}>Save</button>
+            }
 
           </div>
 

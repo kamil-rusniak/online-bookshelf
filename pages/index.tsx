@@ -46,7 +46,7 @@ function Tabs(){
         headers: { "Content-Type": "application/json" },
       });
       const data = await res.json();
-      console.log(data);
+      // console.log(data);
       setBooksFromDb(data);
     } catch (error) {
       console.error(error);
@@ -215,7 +215,7 @@ function Tabs(){
       const authors = await getAuthorsString();
 
       if (authors){
-        console.log(authors);
+        // console.log(authors);
         try {
           const body = { title, authors, isbn, publisher, genre, status };
           await fetch(`/api/book`, {
@@ -240,7 +240,7 @@ function Tabs(){
 
   const [activeTab, setActiveTab] = useState('');
 
-  if (activeTab == ''){
+  if (activeTab === ''){
     setActiveTab('add-books');
   }
 
@@ -252,14 +252,14 @@ function Tabs(){
   return(
     <>
        <nav className="nav">
-        <NavigationTabButton value='add-books' className={`adding-page-button ${activeTab == 'add-books' ? 'active-btn': ''}`} content='Add books' onTabClick={(e) => handleTabClick(e)} />
-        <NavigationTabButton value='my-books' className={`book-page-button ${activeTab == 'my-books' ? 'active-btn': ''}`} content='My books' onTabClick={(e) => handleTabClick(e)} />
+        <NavigationTabButton value='add-books' className={`adding-page-button ${activeTab === 'add-books' ? 'active-btn': ''}`} content='Add books' onTabClick={(e) => handleTabClick(e)} />
+        <NavigationTabButton value='my-books' className={`book-page-button ${activeTab === 'my-books' ? 'active-btn': ''}`} content='My books' onTabClick={(e) => handleTabClick(e)} />
       </nav>
 
       {isLoading && <Spinner />}
       {errorMsg && <ErrorMessage message={errorMsg} setErrorMsg={setErrorMsg}/>}
       
-      {activeTab == 'add-books' ? (
+      {activeTab === 'add-books' ? (
         <AddingTab handleAddClick={handleAddClick} handleSearchClick={handleSearchClick} isLoading={isLoading}></AddingTab>
         ) : (
         <BooksTab bookList={bookList}></BooksTab>

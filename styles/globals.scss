@@ -419,6 +419,7 @@ nav {
 
   &-text {
     width: 60%;
+    position: relative;
     h2 {
       font-size: 1.8rem;
     }
@@ -480,9 +481,28 @@ nav {
     cursor: pointer;
   }
 
-  .edit-confirm{
-    display: none;
+  .book-update-button{
+    opacity: 0;
+    font-size: 1rem;
+    padding: 0.3rem 2rem;
+    border: 1px solid $purple;
+    font-weight: 500;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: #fff;
+    margin-top: 0.7rem;
+    transition: background-color 0.25s ease-in-out, color 0.2s ease-in-out, opacity 0.3s ease-in-out;
+    position: absolute;
+    bottom: 0;
+    &:hover{
+      background-color: $purple;
+      color: #fff;
+    }
+    &.active{
+      opacity: 1;
+    }
   }
+
 }
 
 .small-info {

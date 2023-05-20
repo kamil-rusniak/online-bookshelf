@@ -40,7 +40,7 @@ export default function BooksTab({bookList}: {bookList: ReactElement[]}){
     <section className={`main-page book-page active-page`}>
       <BooksStatusSection 
         section={'to-read'} 
-        sectionActiveStatus={`${activeSection == 'to-read' && 'active' }`} 
+        sectionActiveStatus={`${activeSection === 'to-read' && 'active' }`} 
         onSectionClick={(e:React.MouseEvent<Element, MouseEvent>) => handleSectionClick(e)} 
         bookList={bookList}>
         To Read
@@ -48,7 +48,7 @@ export default function BooksTab({bookList}: {bookList: ReactElement[]}){
 
       <BooksStatusSection 
         section={'reading'} 
-        sectionActiveStatus={`${activeSection == 'reading' && 'active'}`} 
+        sectionActiveStatus={`${activeSection === 'reading' && 'active'}`} 
         onSectionClick={(e:React.MouseEvent<Element, MouseEvent>) => handleSectionClick(e)} 
         bookList={bookList}>
         Reading
@@ -56,7 +56,7 @@ export default function BooksTab({bookList}: {bookList: ReactElement[]}){
 
       <BooksStatusSection 
         section={'finished'} 
-        sectionActiveStatus={`${activeSection == 'finished' && 'active'}`} 
+        sectionActiveStatus={`${activeSection === 'finished' && 'active'}`} 
         onSectionClick={(e:React.MouseEvent<Element, MouseEvent>) => handleSectionClick(e)} 
         bookList={bookList}>
         Finished

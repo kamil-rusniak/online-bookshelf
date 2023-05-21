@@ -8,6 +8,7 @@ import AddingTab from '../components/AddingTab'
 import BooksTab from '../components/BooksTab'
 import Spinner from '../components/Spinner';
 import ErrorMessage from '../components/ErrorMessage';
+import Link from 'next/link';
 
 
 
@@ -251,7 +252,8 @@ function Tabs(){
   
   return(
     <>
-       <nav className="nav">
+      <Link href="/settings" className='settings-button'><i className="fas fa-gears"></i></Link>
+      <nav className="nav">
         <NavigationTabButton value='add-books' className={`adding-page-button ${activeTab === 'add-books' ? 'active-btn': ''}`} content='Add books' onTabClick={(e) => handleTabClick(e)} />
         <NavigationTabButton value='my-books' className={`book-page-button ${activeTab === 'my-books' ? 'active-btn': ''}`} content='My books' onTabClick={(e) => handleTabClick(e)} />
       </nav>

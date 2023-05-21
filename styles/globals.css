@@ -140,6 +140,18 @@ nav {
   border-bottom-left-radius: 0;
 }
 
+.settings-button, .back-button {
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  font-size: 2rem;
+  color: #3f3d56;
+  transition: color 0.1s ease-in-out;
+}
+.settings-button:active, .settings-button:hover, .back-button:active, .back-button:hover {
+  color: #ff9463;
+}
+
 .active-btn {
   background-color: #ff9463;
 }

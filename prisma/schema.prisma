@@ -68,7 +68,8 @@ model User {
   sessions      Session[]
 
   // Non-Next Auth
-  books Book[]
+  books           Book[]
+  settingBookSave String?
 }
 
 model VerificationToken {

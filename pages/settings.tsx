@@ -6,6 +6,7 @@ import { useSession, signIn, signOut } from "next-auth/react"
 export default function Settings(){
   const { data: session } = useSession()
   const user = session?.user;
+  const userId = user?.id as string;
   
   return (
     <>
@@ -31,7 +32,7 @@ export default function Settings(){
                 <p>Signed in as {user.email}</p>
                 <button className='auth-button' onClick={() => signOut()}>Sign out</button>
             </div>
-            <SettingsTab/>
+            <SettingsTab id={userId}/>
         </>
       ) : (
         <>

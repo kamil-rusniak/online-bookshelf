@@ -28,10 +28,10 @@ function BookSearchButton({value, className, id, children, handleSearchClick, is
   )
 }
 
-function SectionRadioInput({value, name, checked}:{value:string, name:string, checked:boolean}){
+function SectionRadioInput({value, name}:{value:string, name:string}){
   return(
     <div className="radio-input">
-      <input type="radio" id={value} name="section" value={value} defaultChecked={checked} />
+      <input type="radio" id={value} name="section" value={value} defaultChecked={localStorage.getItem("settingBookSave") === value} />
       <label htmlFor={value}>{name}</label>
     </div>
   )
@@ -77,9 +77,9 @@ function SectionRadioInput({value, name, checked}:{value:string, name:string, ch
         <div className="input-wrapper sections">
         <label htmlFor="Section">Section</label>
           <div className="wrapper">
-            <SectionRadioInput value='to-read' name='To Read' checked />
-            <SectionRadioInput value='reading' name='Reading' checked={false} />
-            <SectionRadioInput value='finished' name='Finished' checked={false} />
+            <SectionRadioInput value='to-read' name='To Read' />
+            <SectionRadioInput value='reading' name='Reading' />
+            <SectionRadioInput value='finished' name='Finished' />
           </div>
         </div>
 

@@ -2,11 +2,36 @@ import Head from 'next/head'
 import Script from 'next/script'
 import SettingsTab from '@/components/SettingsTab';
 import { useSession, signIn, signOut } from "next-auth/react"
+import { useEffect } from 'react';
 
 export default function Settings(){
   const { data: session } = useSession()
   const user = session?.user;
   const userId = user?.id as string;
+
+  async function getUser() {
+    try {
+      const res = await fetch(`/api/user/getUser`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      const data = await res.json();
+      if(data.length === 1){
+        if (data[0].settingBookSave === null) {
+          localStorage.setItem("settingBookSave", 'to-read');
+        } else {
+          localStorage.setItem("settingBookSave", data[0].settingBookSave);
+        }
+
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    getUser();
+  }, [])
   
   return (
     <>

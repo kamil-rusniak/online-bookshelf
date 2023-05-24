@@ -8,7 +8,7 @@ import AddingTab from '../components/AddingTab'
 import BooksTab from '../components/BooksTab'
 import Spinner from '../components/Spinner';
 import ErrorMessage from '../components/ErrorMessage';
-
+import Link from 'next/link';
 
 
 type BookObject = {
@@ -41,7 +41,7 @@ function Tabs(){
 
   async function getBooks() {
     try {
-      const res = await fetch(`/api/getBooks`, {
+      const res = await fetch(`/api/book/getBooks`, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
       });
@@ -251,7 +251,8 @@ function Tabs(){
   
   return(
     <>
-       <nav className="nav">
+      <Link href="/settings" className='settings-button'><i className="fas fa-gears"></i></Link>
+      <nav className="nav">
         <NavigationTabButton value='add-books' className={`adding-page-button ${activeTab === 'add-books' ? 'active-btn': ''}`} content='Add books' onTabClick={(e) => handleTabClick(e)} />
         <NavigationTabButton value='my-books' className={`book-page-button ${activeTab === 'my-books' ? 'active-btn': ''}`} content='My books' onTabClick={(e) => handleTabClick(e)} />
       </nav>
@@ -273,6 +274,30 @@ function Tabs(){
 export default function Home() {
   const { data: session } = useSession()
   const user = session?.user;
+
+  async function getUser() {
+    try {
+      const res = await fetch(`/api/user/getUser`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      const data = await res.json();
+      if(data.length === 1){
+        if (data[0].settingBookSave === null) {
+          localStorage.setItem("settingBookSave", 'to-read');
+        } else {
+          localStorage.setItem("settingBookSave", data[0].settingBookSave);
+        }
+
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    getUser();
+  }, [])
 
   return (
     <>
@@ -307,9 +332,6 @@ export default function Home() {
           </div>
         </>
       )}
-
-
-
 
       <footer>
         <a href="https://kamilrusniak.com" target='_blank' rel='noreferrer'>Made by Kamil Ruśniak</a>

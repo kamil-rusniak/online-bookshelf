@@ -57,7 +57,7 @@ export default function Settings(){
                 <p>Signed in as {user.email}</p>
                 <button className='auth-button' onClick={() => signOut()}>Sign out</button>
             </div>
-            <SettingsTab id={userId}/>
+            <SettingsTab userId={userId}/>
         </>
       ) : (
         <>

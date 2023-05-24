@@ -13,14 +13,13 @@ function SettingBookSaveInput({value, name}:{value: string, name: string}){
   )
 }
 
-export default function SettingsTab({id}:{id:string}){
+export default function SettingsTab({userId}:{userId:string}){
 
   async function updateSettings(e:React.MouseEvent<HTMLButtonElement, MouseEvent>){
     e.preventDefault();
 
     const target = e.target as Element;
     const editForm = (target as HTMLFormElement).form;
-    const userId = id;
 
     const formData = new FormData(editForm);
     const formJson = Object.fromEntries(formData.entries());
@@ -51,7 +50,6 @@ export default function SettingsTab({id}:{id:string}){
             <SettingBookSaveInput value='reading' name='Reading'/>
             <SettingBookSaveInput value='finished' name='Finished'/>
         </div>
-
 
         <button value='Add' className='page-button' id='settings-save-button' onClick={(e) => updateSettings(e)}>
           Save

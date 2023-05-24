@@ -11,7 +11,6 @@ import ErrorMessage from '../components/ErrorMessage';
 import Link from 'next/link';
 
 
-
 type BookObject = {
   id: string,
   title: string,
@@ -42,7 +41,7 @@ function Tabs(){
 
   async function getBooks() {
     try {
-      const res = await fetch(`/api/getBooks`, {
+      const res = await fetch(`/api/book/getBooks`, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
       });
@@ -333,9 +332,6 @@ export default function Home() {
           </div>
         </>
       )}
-
-
-
 
       <footer>
         <a href="https://kamilrusniak.com" target='_blank' rel='noreferrer'>Made by Kamil Ruśniak</a>

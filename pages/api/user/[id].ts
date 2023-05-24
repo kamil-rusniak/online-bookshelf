@@ -13,7 +13,6 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
     if (req.method === "PUT") {
         if (session) {
             const { sectionSetting } = req.body;
-            console.log(sectionSetting);
             const user = await prisma.user.update({
                 where: {
                     id: userId,

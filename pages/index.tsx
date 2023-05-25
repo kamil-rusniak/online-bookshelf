@@ -296,8 +296,10 @@ export default function Home() {
   }
 
   useEffect(() => {
-    getUser();
-  }, [])
+    if (user){
+      getUser();
+    }
+  }, [user])
 
   return (
     <>

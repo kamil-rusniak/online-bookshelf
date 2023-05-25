@@ -30,8 +30,10 @@ export default function Settings(){
   }
 
   useEffect(() => {
-    getUser();
-  }, [])
+    if (user){
+      getUser();
+    }
+  }, [user])
   
   return (
     <>

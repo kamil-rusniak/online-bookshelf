@@ -622,6 +622,9 @@ footer a {
   .book-details img {
     max-width: 250px;
   }
+  .book-details .book-update-button {
+    bottom: -1rem;
+  }
 }
 @media (max-width: 700px) {
   .adding-page .input-wrapper.sections .wrapper {
@@ -636,7 +639,8 @@ footer a {
     width: 85%;
     flex-direction: column;
     margin: 5% auto;
-    padding: 1.4rem;
+    padding: 0 1.4rem 1.4rem 1.4rem;
+    gap: 3rem;
   }
   .book-details-text {
     width: 100%;

@@ -39,22 +39,22 @@ export default function SettingsTab({userId}:{userId:string}){
   }
 
   return(
-    <>
+    <div className="settings-tab">
         <Link href="/" className='settings-button'><i className="fa-solid fa-house"></i></Link>
         <h2>Settings</h2>
         <form className='settings-form'> 
 
         <div className="input-wrapper book-save">
-            <label htmlFor='setting-book-save'>When adding new books, save them to:</label>
+            <label htmlFor='setting-book-save' className="title-label">When adding new books, save them to:</label>
             <SettingBookSaveInput value='to-read' name='To Read'/>
             <SettingBookSaveInput value='reading' name='Reading'/>
             <SettingBookSaveInput value='finished' name='Finished'/>
         </div>
 
         <button value='Add' className='page-button' id='settings-save-button' onClick={(e) => updateSettings(e)}>
-          Save
+          Save settings
         </button>
       </form>
-    </>
+    </div>
   )
 }

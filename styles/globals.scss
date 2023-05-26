@@ -521,6 +521,42 @@ nav {
   font-size: 0.8rem;
 }
 
+.settings-tab{
+  padding: 3rem 2rem;
+  max-width: 1440px;
+  margin: 0 auto;
+  h2{
+    text-align: center;
+    font-size: 3rem;
+    font-weight: normal;
+    margin-bottom: 2.5rem;
+  }
+
+  .settings-form{
+    .book-save{
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+  }
+
+  #settings-save-button{
+    font-size: 1rem;
+    padding: 0.3rem 2rem;
+    border: 1px solid $purple;
+    font-weight: 500;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: #fff;
+    margin-top: 2.7rem;
+    transition: background-color 0.25s ease-in-out, color 0.2s ease-in-out;
+    &:hover{
+      background-color: $purple;
+      color: #fff;
+    }
+  }
+}
+
 footer {
   align-self: center;
   text-align: center;
@@ -653,6 +689,10 @@ footer {
     img {
       max-width: 250px;
     }
+
+    .book-update-button{
+      bottom: -1rem;
+    }
   }
 }
 
@@ -667,12 +707,17 @@ footer {
       }
     }
   }
+  .settings-button, .back-button{
+    left: 0.5rem;
+    top: 0.5rem;
+  }
   .book-details {
     &-content {
       width: 85%;
       flex-direction: column;
       margin: 5% auto;
-      padding: 1.4rem;
+      padding: 0 1.4rem 1.4rem 1.4rem;
+      gap: 3rem;
     }
 
     &-text {

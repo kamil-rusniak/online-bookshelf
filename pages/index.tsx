@@ -337,8 +337,9 @@ export default function Home() {
 
       <footer>
         <a href="https://kamilrusniak.com" target='_blank' rel='noreferrer'>Made by Kamil Ruśniak</a>
-        <a href="https://openlibrary.org/" target='_blank' rel='noreferrer'>Using Open Library API</a>
-        <a href="https://undraw.co" target='_blank' rel='noreferrer'>Background image from undraw.co</a>
+        <a href="https://openlibrary.org" target='_blank' rel='noreferrer'>Using Open Library API</a>
+        <a href="https://undraw.co" target='_blank' rel='noreferrer'>Bg image from undraw.co</a>
+        <a href="https://fontawesome.com" target='_blank' rel='noreferrer'>Icons from Font Awesome</a>
       </footer>
     </>
   )

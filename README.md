@@ -12,7 +12,7 @@
 
 https://online-bookshelf.com/
 <br/>
-<a href="https://online-bookshelf.com/" target="_blank"><img width='800px' src='https://res.cloudinary.com/dmkuxi3j8/image/upload/v1685126602/portfolio/ob_efpu6i.png' alt="Preview of Online Bookshelf App" /></a>
+<a href="https://online-bookshelf.com/"><img width='800px' src='https://res.cloudinary.com/dmkuxi3j8/image/upload/v1685126602/portfolio/ob_efpu6i.png' alt="Preview of Online Bookshelf App" /></a>
 
 It's a new version of my <a href="https://github.com/kamil-rusniak/js-online-bookshelf/">JavaScript Online Bookshelf</a>
 

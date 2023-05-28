@@ -508,6 +508,7 @@ nav {
     transition: background-color 0.25s ease-in-out, color 0.2s ease-in-out, opacity 0.3s ease-in-out;
     position: absolute;
     bottom: 0;
+    color: #000;
     &:hover{
       background-color: $purple;
       color: #fff;

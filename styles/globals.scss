@@ -59,6 +59,7 @@ body {
     background-color: #fff;
     margin-top: 0.7rem;
     transition: background-color 0.25s ease-in-out, color 0.2s ease-in-out;
+    color: #000;
     &:hover{
       background-color: $purple;
       color: #fff;
@@ -136,6 +137,7 @@ nav {
   border-radius: 10px;
   cursor: pointer;
   background-color: #fff;
+  color: #000;
 }
 
 .adding-page-button {
@@ -550,6 +552,7 @@ nav {
     background-color: #fff;
     margin-top: 2.7rem;
     transition: background-color 0.25s ease-in-out, color 0.2s ease-in-out;
+    color: #000;
     &:hover{
       background-color: $purple;
       color: #fff;

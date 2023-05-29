@@ -1,13 +1,13 @@
-import { MouseEventHandler, useState } from "react"
+import { Dispatch, MouseEventHandler, SetStateAction, useState } from "react"
 import BookDetailsWindow from "./BookDetailsWindow"
 
-function BookButtons({onSwitch, onDelete, onInfo}:{onSwitch:Function, onDelete:MouseEventHandler, onInfo:MouseEventHandler}){
+function BookButtons({onSwitch, onDelete, onInfo, setLoadingState}:{onSwitch:Function, onDelete:MouseEventHandler, onInfo:MouseEventHandler, setLoadingState:Dispatch<SetStateAction<boolean>>}){
   return(
     <div className="book-buttons">
       <BookInfoButton onInfo={(e) => onInfo(e)}></BookInfoButton>
       <BookDeleteButton onDelete={(e) => onDelete(e)}></BookDeleteButton>
-      <BookSwitchButton onSwitch={() => onSwitch('up')} switchType='up' />
-      <BookSwitchButton onSwitch={() => onSwitch('down')} switchType='down' />
+      <BookSwitchButton onSwitch={() => onSwitch('up', setLoadingState)} switchType='up' />
+      <BookSwitchButton onSwitch={() => onSwitch('down', setLoadingState)} switchType='down' />
   </div>
   )
 }
@@ -33,6 +33,7 @@ function BookInfoButton({onInfo}:{onInfo:MouseEventHandler}){
 
 export default function BookElement({id, title, author, publisher, genre, isbn, onSwitch, onDelete, handleEdit}:{id:string, title: string, author: string, publisher: string, genre: string, isbn:string, status: string, onSwitch:Function, onDelete:MouseEventHandler, handleEdit: MouseEventHandler}){
   const [showDetails, setShowDetails] = useState(false);
+  const [bookStatusUpdating, setBookStatusUpdating] = useState(false);
 
   function handleInfo(){
     setShowDetails(true);
@@ -50,7 +51,8 @@ export default function BookElement({id, title, author, publisher, genre, isbn, 
            <p className="book-isbn hidden">{isbn}</p>
          </div>
        </div>
-       <BookButtons onSwitch={onSwitch} onDelete={onDelete} onInfo={() => handleInfo()}/>
+       {bookStatusUpdating && <p>Loading...</p>}
+       <BookButtons onSwitch={onSwitch} setLoadingState={setBookStatusUpdating} onDelete={onDelete} onInfo={() => handleInfo()} />
       {showDetails && 
         <BookDetailsWindow 
           id={id}

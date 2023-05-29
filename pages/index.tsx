@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import Script from 'next/script'
-import { useState, MouseEventHandler, useEffect } from 'react';
+import { useState, MouseEventHandler, useEffect, Dispatch, SetStateAction } from 'react';
 import { useSession, signIn, signOut } from "next-auth/react"
 import { getBookJson, getAuthor } from './api/openlibrary';
 import BookElement from '../components/BookElement';
@@ -67,13 +67,14 @@ function Tabs(){
       publisher={book.publisher} 
       genre={book.genre} 
       status={book.status} 
-      onSwitch={(switchType:string) => handleSwitch(switchType, book.id, book.status)} 
+      onSwitch={(switchType:string, setLoading:Dispatch<SetStateAction<boolean>>) => handleSwitch(switchType, book.id, book.status, setLoading)} 
       onDelete={() => handleDelete(book.id)}
       handleEdit={(e) => handleEdit(e, book.id)}
     />
   );
 
-  async function handleSwitch(switchType:string, bookId:string, status:string){
+  async function handleSwitch(switchType:string, bookId:string, status:string, setLoading:Dispatch<SetStateAction<boolean>>){
+    setLoading(true)
     if(status === 'to-read'){
       status = 'reading';
     } else if(status === 'reading'){
@@ -94,8 +95,12 @@ function Tabs(){
         body: JSON.stringify(body),
       });
       getBooks();
+      setTimeout(() => {
+        setLoading(false)
+      }, 1000);
     } catch (error) {
       console.error(error);
+      setLoading(false)
     }
   }
 

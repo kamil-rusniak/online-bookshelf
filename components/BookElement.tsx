@@ -35,6 +35,7 @@ export default function BookElement({id, title, author, publisher, genre, isbn, 
   const [showDetails, setShowDetails] = useState(false);
   const [bookStatusUpdating, setBookStatusUpdating] = useState(false);
   const [showSaveBtn, setShowSaveBtn] = useState(false);
+  const [styleSaveBtn, setStyleSaveBtn] = useState(false);
 
   function handleInfo(){
     setShowDetails(true);
@@ -67,6 +68,8 @@ export default function BookElement({id, title, author, publisher, genre, isbn, 
           handleEdit={handleEdit}
           showSaveBtn={showSaveBtn}
           setShowSaveBtn={setShowSaveBtn}
+          styleSaveBtn={styleSaveBtn}
+          setStyleSaveBtn={setStyleSaveBtn}
         />
       }
      </div>

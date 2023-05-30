@@ -13,9 +13,7 @@ function BookDetailsInput({value, fieldType, autofocus, handleChange}:{value: st
   )
 }
 
-export default function BookDetailsWindow({id, title, author, publisher, genre, isbn, showDetails, setShowDetails, handleEdit, showSaveBtn, setShowSaveBtn}:{id:string, title:string, author:string, publisher: string, genre: string, isbn: string, showDetails:boolean, setShowDetails:Dispatch<SetStateAction<boolean>>, handleEdit: Function, showSaveBtn:boolean, setShowSaveBtn:Dispatch<SetStateAction<boolean>>}){
-
-  const [styleSaveBtn, setStyleSaveBtn] = useState(false);
+export default function BookDetailsWindow({id, title, author, publisher, genre, isbn, showDetails, setShowDetails, handleEdit, showSaveBtn, setShowSaveBtn, styleSaveBtn, setStyleSaveBtn}:{id:string, title:string, author:string, publisher: string, genre: string, isbn: string, showDetails:boolean, setShowDetails:Dispatch<SetStateAction<boolean>>, handleEdit: Function, showSaveBtn:boolean, setShowSaveBtn:Dispatch<SetStateAction<boolean>>, styleSaveBtn:boolean, setStyleSaveBtn:Dispatch<SetStateAction<boolean>>}){
 
   function showButton(){
     if (showSaveBtn === false){
@@ -84,7 +82,7 @@ export default function BookDetailsWindow({id, title, author, publisher, genre, 
             </div>
 
             {showSaveBtn && 
-             <SaveBtn className={`book-update-button ${styleSaveBtn && 'active'}`} handleEdit={(e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => handleEdit(e, setShowSaveBtn)}/>
+             <SaveBtn className={`book-update-button ${styleSaveBtn && 'active'}`} handleEdit={(e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => handleEdit(e, setShowSaveBtn, setStyleSaveBtn)}/>
             }
 
           </div>

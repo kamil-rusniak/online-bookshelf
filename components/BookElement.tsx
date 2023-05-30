@@ -31,9 +31,10 @@ function BookInfoButton({onInfo}:{onInfo:MouseEventHandler}){
 }
 
 
-export default function BookElement({id, title, author, publisher, genre, isbn, onSwitch, onDelete, handleEdit}:{id:string, title: string, author: string, publisher: string, genre: string, isbn:string, status: string, onSwitch:Function, onDelete:MouseEventHandler, handleEdit: MouseEventHandler}){
+export default function BookElement({id, title, author, publisher, genre, isbn, onSwitch, onDelete, handleEdit}:{id:string, title: string, author: string, publisher: string, genre: string, isbn:string, status: string, onSwitch:Function, onDelete:MouseEventHandler, handleEdit: Function}){
   const [showDetails, setShowDetails] = useState(false);
   const [bookStatusUpdating, setBookStatusUpdating] = useState(false);
+  const [showSaveBtn, setShowSaveBtn] = useState(false);
 
   function handleInfo(){
     setShowDetails(true);
@@ -64,6 +65,8 @@ export default function BookElement({id, title, author, publisher, genre, isbn, 
           showDetails={showDetails}
           setShowDetails={setShowDetails}
           handleEdit={handleEdit}
+          showSaveBtn={showSaveBtn}
+          setShowSaveBtn={setShowSaveBtn}
         />
       }
      </div>

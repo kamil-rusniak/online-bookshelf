@@ -1,6 +1,11 @@
 import Image from 'next/image';
 import { ChangeEventHandler, Dispatch, MouseEventHandler, SetStateAction, useState } from 'react';
 
+function SaveBtn({className, handleEdit}:{className:string, handleEdit:MouseEventHandler}){
+  return(
+    <button className={className} onClick={handleEdit}>Save</button>
+  )
+}
 
 function BookDetailsInput({value, fieldType, autofocus, handleChange}:{value: string, fieldType: string, autofocus: boolean, handleChange:ChangeEventHandler<HTMLInputElement>}){
   return(
@@ -8,9 +13,8 @@ function BookDetailsInput({value, fieldType, autofocus, handleChange}:{value: st
   )
 }
 
-export default function BookDetailsWindow({id, title, author, publisher, genre, isbn, showDetails, setShowDetails, handleEdit}:{id:string, title:string, author:string, publisher: string, genre: string, isbn: string, showDetails:boolean, setShowDetails:Dispatch<SetStateAction<boolean>>, handleEdit: MouseEventHandler}){
+export default function BookDetailsWindow({id, title, author, publisher, genre, isbn, showDetails, setShowDetails, handleEdit, showSaveBtn, setShowSaveBtn}:{id:string, title:string, author:string, publisher: string, genre: string, isbn: string, showDetails:boolean, setShowDetails:Dispatch<SetStateAction<boolean>>, handleEdit: Function, showSaveBtn:boolean, setShowSaveBtn:Dispatch<SetStateAction<boolean>>}){
 
-  const [showSaveBtn, setShowSaveBtn] = useState(false);
   const [styleSaveBtn, setStyleSaveBtn] = useState(false);
 
   function showButton(){
@@ -80,7 +84,7 @@ export default function BookDetailsWindow({id, title, author, publisher, genre, 
             </div>
 
             {showSaveBtn && 
-             <button className={`book-update-button ${styleSaveBtn && 'active'}`} onClick={handleEdit}>Save</button>
+             <SaveBtn className={`book-update-button ${styleSaveBtn && 'active'}`} handleEdit={(e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => handleEdit(e, setShowSaveBtn)}/>
             }
 
           </div>

@@ -69,7 +69,7 @@ function Tabs(){
       status={book.status} 
       onSwitch={(switchType:string, setLoading:Dispatch<SetStateAction<boolean>>) => handleSwitch(switchType, book.id, book.status, setLoading)} 
       onDelete={() => handleDelete(book.id)}
-      handleEdit={(e) => handleEdit(e, book.id)}
+      handleEdit={(e:React.MouseEvent<HTMLButtonElement, MouseEvent>, setShowSaveBtn:Dispatch<SetStateAction<boolean>>) => handleEdit(e, book.id, setShowSaveBtn)}
     />
   );
 
@@ -116,7 +116,7 @@ function Tabs(){
     }
   }
 
-  async function handleEdit(e:React.MouseEvent<Element, MouseEvent>, bookId:string){
+  async function handleEdit(e:React.MouseEvent<HTMLButtonElement, MouseEvent>, bookId:string, setShowSaveBtn:Dispatch<SetStateAction<boolean>>){
     e.preventDefault();
 
     const target = e.target as Element;
@@ -129,7 +129,7 @@ function Tabs(){
     const publisher = formJson.publisher as string;
     const genre = formJson.genre as string;
     const isbn = formJson.isbn as string;
-      
+
     try {
       const body = { title, authors, isbn, publisher, genre };
       await fetch(`/api/book/${bookId}`, {
@@ -138,8 +138,10 @@ function Tabs(){
         body: JSON.stringify(body),
       });
       getBooks();
+      setShowSaveBtn(false);
     } catch (error) {
       console.error(error);
+      setShowSaveBtn(false);
     }
   }
 

@@ -380,6 +380,15 @@ nav {
   i {
     font-size: 1.5rem;
   }
+
+  .spinner{
+    margin: 0 10px 0 auto;
+    .loading-circle{
+      width: 24px;
+      height: 24px;
+      border-width: 3px;
+    }
+  }
 }
 
 .book-info {

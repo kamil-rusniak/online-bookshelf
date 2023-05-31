@@ -354,6 +354,14 @@ nav {
 .book-element i {
   font-size: 1.5rem;
 }
+.book-element .spinner {
+  margin: 0 10px 0 auto;
+}
+.book-element .spinner .loading-circle {
+  width: 24px;
+  height: 24px;
+  border-width: 3px;
+}
 
 .book-info {
   padding-left: 0.6rem;

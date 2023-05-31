@@ -1,5 +1,6 @@
 import { Dispatch, MouseEventHandler, SetStateAction, useState } from "react"
 import BookDetailsWindow from "./BookDetailsWindow"
+import Spinner from "./Spinner"
 
 function BookButtons({onSwitch, onDelete, onInfo, setLoadingState}:{onSwitch:Function, onDelete:MouseEventHandler, onInfo:MouseEventHandler, setLoadingState:Dispatch<SetStateAction<boolean>>}){
   return(
@@ -53,7 +54,7 @@ export default function BookElement({id, title, author, publisher, genre, isbn, 
            <p className="book-isbn hidden">{isbn}</p>
          </div>
        </div>
-       {bookStatusUpdating && <p>Loading...</p>}
+       {bookStatusUpdating && <Spinner/>}
        <BookButtons onSwitch={onSwitch} setLoadingState={setBookStatusUpdating} onDelete={onDelete} onInfo={() => handleInfo()} />
       {showDetails && 
         <BookDetailsWindow 

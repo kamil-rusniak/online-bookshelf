@@ -1,6 +1,37 @@
 import { MouseEventHandler, ReactNode } from 'react';
 
-function BookAddButton({value, className, id, children, handleAddClick, isLoading}: {value: string, className: string, id: string, children:string, handleAddClick:MouseEventHandler, isLoading:boolean}){
+interface BookAddButtonProps {
+  value: string;
+  className: string;
+  id: string;
+  children:string;
+  handleAddClick:MouseEventHandler;
+  isLoading:boolean;
+}
+
+interface BookSearchButton {
+  value: string;
+  className: string;
+  id: string;
+  children:ReactNode;
+  handleSearchClick: MouseEventHandler;
+  isLoading:boolean;
+}
+
+interface BookAddForm {
+  handleAddClick: MouseEventHandler;
+  handleSearchClick: MouseEventHandler;
+  isLoading: boolean;
+}
+
+interface AddingTab {
+  handleAddClick:MouseEventHandler;
+  handleSearchClick:MouseEventHandler;
+  isLoading:boolean;
+}
+
+
+function BookAddButton({value, className, id, children, handleAddClick, isLoading}: BookAddButtonProps){
   return(
     <button 
       value={value} 
@@ -14,7 +45,7 @@ function BookAddButton({value, className, id, children, handleAddClick, isLoadin
   )
 }
 
-function BookSearchButton({value, className, id, children, handleSearchClick, isLoading}: {value: string, className: string, id: string, children:ReactNode, handleSearchClick: MouseEventHandler, isLoading:boolean}){
+function BookSearchButton({value, className, id, children, handleSearchClick, isLoading}: BookSearchButton){
   return(
     <button 
       value={value} 
@@ -37,7 +68,7 @@ function SectionRadioInput({value, name}:{value:string, name:string}){
   )
 }
 
- function BookAddForm({handleAddClick, handleSearchClick, isLoading}:{handleAddClick: MouseEventHandler, handleSearchClick: MouseEventHandler, isLoading: boolean}){
+ function BookAddForm({handleAddClick, handleSearchClick, isLoading}:BookAddForm){
   return(
       <form className='book-add-form'> 
         <div className="input-wrapper">
@@ -91,7 +122,7 @@ function SectionRadioInput({value, name}:{value:string, name:string}){
   )
 }
 
-export default function AddingTab({handleAddClick, handleSearchClick, isLoading}: {handleAddClick:MouseEventHandler, handleSearchClick:MouseEventHandler, isLoading:boolean}){
+export default function AddingTab({handleAddClick, handleSearchClick, isLoading}: AddingTab){
   return(
     <section className={`main-page adding-page active-page`}>
       <BookAddForm handleAddClick={handleAddClick} handleSearchClick={handleSearchClick} isLoading={isLoading}></BookAddForm>

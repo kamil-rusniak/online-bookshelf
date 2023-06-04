@@ -1,19 +1,42 @@
 import Image from 'next/image';
 import { ChangeEventHandler, Dispatch, MouseEventHandler, SetStateAction, useState } from 'react';
 
+interface BookDetailsInput {
+  value: string;
+  fieldType: string;
+  autofocus: boolean;
+  handleChange:ChangeEventHandler<HTMLInputElement>;
+}
+
+interface BookDetailsWindow {
+  id:string;
+  title:string;
+  author:string;
+  publisher: string;
+  genre: string;
+  isbn: string;
+  showDetails:boolean;
+  setShowDetails:Dispatch<SetStateAction<boolean>>;
+  handleEdit: Function;
+  showSaveBtn:boolean;
+  setShowSaveBtn:Dispatch<SetStateAction<boolean>>;
+  styleSaveBtn:boolean;
+  setStyleSaveBtn:Dispatch<SetStateAction<boolean>>;
+}
+
 function SaveBtn({className, handleEdit}:{className:string, handleEdit:MouseEventHandler}){
   return(
     <button className={className} onClick={handleEdit}>Save</button>
   )
 }
 
-function BookDetailsInput({value, fieldType, autofocus, handleChange}:{value: string, fieldType: string, autofocus: boolean, handleChange:ChangeEventHandler<HTMLInputElement>}){
+function BookDetailsInput({value, fieldType, autofocus, handleChange}:BookDetailsInput){
   return(
     <input autoFocus={autofocus} type="text" name={fieldType} className="book-details-input" id={`book-details-${fieldType}`} onChange={handleChange} defaultValue={value}/>
   )
 }
 
-export default function BookDetailsWindow({id, title, author, publisher, genre, isbn, showDetails, setShowDetails, handleEdit, showSaveBtn, setShowSaveBtn, styleSaveBtn, setStyleSaveBtn}:{id:string, title:string, author:string, publisher: string, genre: string, isbn: string, showDetails:boolean, setShowDetails:Dispatch<SetStateAction<boolean>>, handleEdit: Function, showSaveBtn:boolean, setShowSaveBtn:Dispatch<SetStateAction<boolean>>, styleSaveBtn:boolean, setStyleSaveBtn:Dispatch<SetStateAction<boolean>>}){
+export default function BookDetailsWindow({id, title, author, publisher, genre, isbn, showDetails, setShowDetails, handleEdit, showSaveBtn, setShowSaveBtn, styleSaveBtn, setStyleSaveBtn}:BookDetailsWindow){
 
   function showButton(){
     if (showSaveBtn === false){

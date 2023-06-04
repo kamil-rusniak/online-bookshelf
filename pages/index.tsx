@@ -21,7 +21,14 @@ type BookObject = {
   status: string
 }
 
-function NavigationTabButton({value, content, onTabClick, className}: {value: string, content:string, onTabClick: MouseEventHandler<HTMLButtonElement>, className: string}){
+interface NavigationTabButton {
+  value: string;
+  content:string;
+  onTabClick: MouseEventHandler<HTMLButtonElement>;
+  className: string;
+}
+
+function NavigationTabButton({value, content, onTabClick, className}: NavigationTabButton){
   return (
     <button
     value={value}

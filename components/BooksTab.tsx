@@ -1,6 +1,14 @@
 import { MouseEventHandler, ReactElement, useState } from "react";
 
-function BooksStatusSection({sectionActiveStatus, children, section, onSectionClick, bookList}:{sectionActiveStatus: string, children: string, section: string, onSectionClick: MouseEventHandler, bookList: ReactElement[]}){
+interface BooksStatusSection {
+  sectionActiveStatus: string;
+   children: string;
+   section: string;
+   onSectionClick: MouseEventHandler;
+   bookList: ReactElement[];
+}
+
+function BooksStatusSection({sectionActiveStatus, children, section, onSectionClick, bookList}:BooksStatusSection){
 
   bookList = bookList.filter((book: ReactElement) => {
     if(book){

@@ -9,7 +9,7 @@ import BooksTab from '../components/BooksTab'
 import Spinner from '../components/Spinner';
 import ErrorMessage from '../components/ErrorMessage';
 import Link from 'next/link';
-
+import { NavigationTabButtonProps, AuthorProps } from '@/types/interfaces';
 
 type BookObject = {
   id: string,
@@ -21,7 +21,8 @@ type BookObject = {
   status: string
 }
 
-function NavigationTabButton({value, content, onTabClick, className}: {value: string, content:string, onTabClick: MouseEventHandler<HTMLButtonElement>, className: string}){
+
+function NavigationTabButton({value, content, onTabClick, className}: NavigationTabButtonProps){
   return (
     <button
     value={value}
@@ -200,16 +201,14 @@ function Tabs(){
       const genre = formJson.genre as string;
       const isbn = formJson.isbn as string;
       const status = formJson.section as string;
-      interface Author{
-        key: string
-      }
+
 
       const publisher = publisherResult.join(', ');
       setIsLoading(false);
 
       function getAuthorsString(){
         return new Promise(resolve => {
-          authorKeysArray.forEach((author:Author) => {
+          authorKeysArray.forEach((author:AuthorProps) => {
             getAuthor(author.key).then((result) => {
               const authorName = result.name;
               authorsArray.push(`${authorName}`);

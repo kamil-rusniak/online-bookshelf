@@ -1,5 +1,7 @@
 import Image from 'next/image';
 import { ChangeEventHandler, Dispatch, MouseEventHandler, SetStateAction, useState } from 'react';
+import { BookDetailsInputProps, BookDetailsWindowProps } from '@/types/interfaces';
+
 
 function SaveBtn({className, handleEdit}:{className:string, handleEdit:MouseEventHandler}){
   return(
@@ -7,13 +9,13 @@ function SaveBtn({className, handleEdit}:{className:string, handleEdit:MouseEven
   )
 }
 
-function BookDetailsInput({value, fieldType, autofocus, handleChange}:{value: string, fieldType: string, autofocus: boolean, handleChange:ChangeEventHandler<HTMLInputElement>}){
+function BookDetailsInput({value, fieldType, autofocus, handleChange}:BookDetailsInputProps){
   return(
     <input autoFocus={autofocus} type="text" name={fieldType} className="book-details-input" id={`book-details-${fieldType}`} onChange={handleChange} defaultValue={value}/>
   )
 }
 
-export default function BookDetailsWindow({id, title, author, publisher, genre, isbn, showDetails, setShowDetails, handleEdit, showSaveBtn, setShowSaveBtn, styleSaveBtn, setStyleSaveBtn}:{id:string, title:string, author:string, publisher: string, genre: string, isbn: string, showDetails:boolean, setShowDetails:Dispatch<SetStateAction<boolean>>, handleEdit: Function, showSaveBtn:boolean, setShowSaveBtn:Dispatch<SetStateAction<boolean>>, styleSaveBtn:boolean, setStyleSaveBtn:Dispatch<SetStateAction<boolean>>}){
+export default function BookDetailsWindow({id, title, author, publisher, genre, isbn, showDetails, setShowDetails, handleEdit, showSaveBtn, setShowSaveBtn, styleSaveBtn, setStyleSaveBtn}:BookDetailsWindowProps){
 
   function showButton(){
     if (showSaveBtn === false){

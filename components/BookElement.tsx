@@ -1,28 +1,9 @@
 import { Dispatch, MouseEventHandler, SetStateAction, useState } from "react"
 import BookDetailsWindow from "./BookDetailsWindow"
 import Spinner from "./Spinner"
+import { BookButtonsProps, BookElementProps } from "@/types/interfaces"
 
-interface BookButtons {
-  onSwitch:Function;
-  onDelete:MouseEventHandler;
-  onInfo:MouseEventHandler;
-  setLoadingState:Dispatch<SetStateAction<boolean>>;
-}
-
-interface BookElement {
-  id:string
-  title: string;
-  author: string;
-  publisher: string;
-  genre: string;
-  isbn:string;
-  status: string;
-  onSwitch:Function;
-  onDelete:MouseEventHandler;
-  handleEdit: Function;
-}
-
-function BookButtons({onSwitch, onDelete, onInfo, setLoadingState}:BookButtons){
+function BookButtons({onSwitch, onDelete, onInfo, setLoadingState}:BookButtonsProps){
   return(
     <div className="book-buttons">
       <BookInfoButton onInfo={(e) => onInfo(e)}></BookInfoButton>
@@ -52,7 +33,7 @@ function BookInfoButton({onInfo}:{onInfo:MouseEventHandler}){
 }
 
 
-export default function BookElement({id, title, author, publisher, genre, isbn, onSwitch, onDelete, handleEdit}:BookElement){
+export default function BookElement({id, title, author, publisher, genre, isbn, onSwitch, onDelete, handleEdit}:BookElementProps){
   const [showDetails, setShowDetails] = useState(false);
   const [bookStatusUpdating, setBookStatusUpdating] = useState(false);
   const [showSaveBtn, setShowSaveBtn] = useState(false);

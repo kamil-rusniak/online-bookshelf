@@ -45,7 +45,7 @@ function SectionRadioInput({value, name}:{value:string, name:string}){
         <div className="input-wrapper">
           <label className="label" htmlFor="isbn">ISBN</label>
           <div className="input-inner">
-            <input type="number" name="isbn" id="isbn" className="isbn" />
+            <input type="text" pattern="[0-9\-]+" name="isbn" id="isbn" className="isbn" inputMode="numeric" />
             <BookSearchButton className='' id='search-button' value='Search' handleSearchClick={handleSearchClick} isLoading={isLoading}>
               <i className="fas fa-search search-icon" id="search-icon"></i>
             </BookSearchButton>

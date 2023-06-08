@@ -130,7 +130,7 @@ function Tabs(){
     const publisher = formJson.publisher as string;
     const genre = formJson.genre as string;
     const isbnInput = formJson.isbn as string;
-    const isbn = isbnInput.replace("-", "");
+    const isbn = isbnInput.replaceAll("-", "");
 
     try {
       const body = { title, authors, isbn, publisher, genre };
@@ -166,7 +166,7 @@ function Tabs(){
     const publisher = formJson.publisher as string;
     const genre = formJson.genre as string;
     const isbnInput = formJson.isbn as string;
-    const isbn = isbnInput.replace("-", "");
+    const isbn = isbnInput.replaceAll("-", "");
     const status = formJson.section as string;
 
     try {
@@ -202,7 +202,7 @@ function Tabs(){
       const authorKeysArray = result.authors;
       const genre = formJson.genre as string;
       const isbnInput = formJson.isbn as string;
-      const isbn = isbnInput.replace("-", "");
+      const isbn = isbnInput.replaceAll("-", "");
       const status = formJson.section as string;
 
 

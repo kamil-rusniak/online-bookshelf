@@ -129,7 +129,8 @@ function Tabs(){
     const authors = formJson.author as string;
     const publisher = formJson.publisher as string;
     const genre = formJson.genre as string;
-    const isbn = formJson.isbn as string;
+    const isbnInput = formJson.isbn as string;
+    const isbn = isbnInput.replace("-", "");
 
     try {
       const body = { title, authors, isbn, publisher, genre };

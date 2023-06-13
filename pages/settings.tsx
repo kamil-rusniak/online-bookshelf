@@ -66,6 +66,9 @@ export default function Settings(){
             <div className="auth-wrapper login">
                 <button className='auth-button' onClick={() => signIn()}>Sign in</button>  
             </div>
+            <div className="intro-message">
+              <h2>Online Bookshelf is a full-stack web app that lets you manage and keep track of your books.</h2>
+            </div>
         </>
       )}
 

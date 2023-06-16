@@ -3,6 +3,7 @@ import Script from 'next/script'
 import SettingsTab from '@/components/SettingsTab';
 import { useSession, signIn, signOut } from "next-auth/react"
 import { useEffect } from 'react';
+import Link from 'next/link';
 
 export default function Settings(){
   const { data: session } = useSession()
@@ -50,7 +51,7 @@ export default function Settings(){
       <Script src="https://kit.fontawesome.com/d115c62847.js" crossOrigin="anonymous" async />
     
       <header>
-        <h1 className="title">Online <i className="fas fa-book orange"></i> Bookshelf</h1>
+        <Link href={'/'}><h1 className="title">Online <i className="fas fa-book orange"></i> Bookshelf</h1></Link>
       </header>
 
       {user ? (

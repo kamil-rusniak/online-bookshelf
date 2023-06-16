@@ -102,6 +102,13 @@ body {
   animation: spinner 1.15s linear infinite;
 }
 
+header{
+  a{
+    text-decoration: none;
+    color: #000;
+  }
+}
+
 .title {
   margin-top: 2rem;
   font-size: 4rem;

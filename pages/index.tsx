@@ -331,7 +331,7 @@ export default function Home() {
       <Script src="https://kit.fontawesome.com/d115c62847.js" crossOrigin="anonymous" async />
     
       <header>
-        <h1 className="title">Online <i className="fas fa-book orange"></i> Bookshelf</h1>
+        <Link href={'/'}><h1 className="title">Online <i className="fas fa-book orange"></i> Bookshelf</h1></Link>
       </header>
 
       {user ? (

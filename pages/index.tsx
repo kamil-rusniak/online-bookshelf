@@ -331,7 +331,7 @@ export default function Home() {
       <Script src="https://kit.fontawesome.com/d115c62847.js" crossOrigin="anonymous" async />
     
       <header>
-        <h1 className="title">Online <i className="fas fa-book orange"></i> Bookshelf</h1>
+        <Link href={'/'}><h1 className="title">Online <i className="fas fa-book orange"></i> Bookshelf</h1></Link>
       </header>
 
       {user ? (
@@ -346,6 +346,9 @@ export default function Home() {
         <>
           <div className="auth-wrapper login">
             <button className='auth-button' onClick={() => signIn()}>Sign in</button>  
+          </div>
+          <div className="intro-message">
+            <h2>Online Bookshelf is a full-stack web app that lets you manage and keep track of your books.</h2>
           </div>
         </>
       )}

@@ -68,6 +68,17 @@ body {
   padding: 0.7rem 2.5rem;
 }
 
+.intro-message {
+  max-width: 600px;
+  margin: 0 auto;
+  margin-top: 3rem;
+  padding: 2rem;
+  text-align: center;
+}
+.intro-message h2 {
+  font-weight: normal;
+}
+
 .spinner {
   display: flex;
   justify-content: center;
@@ -82,6 +93,11 @@ body {
   width: 65px;
   height: 65px;
   animation: spinner 1.15s linear infinite;
+}
+
+header a {
+  text-decoration: none;
+  color: #000;
 }
 
 .title {

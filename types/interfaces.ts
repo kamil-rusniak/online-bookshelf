@@ -20,7 +20,7 @@ export interface BookAddButtonProps {
     id: string;
     children: string;
     handleAddClick: MouseEventHandler;
-    isLoading: boolean;
+    bookIsAdding: boolean;
 }
 
 export interface BookSearchButtonProps {
@@ -29,19 +29,19 @@ export interface BookSearchButtonProps {
     id: string;
     children: ReactNode;
     handleSearchClick: MouseEventHandler;
-    isLoading: boolean;
+    bookIsAdding: boolean;
 }
 
 export interface BookAddFormProps {
     handleAddClick: MouseEventHandler;
     handleSearchClick: MouseEventHandler;
-    isLoading: boolean;
+    bookIsAdding: boolean;
 }
 
 export interface AddingTabProps {
     handleAddClick: MouseEventHandler;
     handleSearchClick: MouseEventHandler;
-    isLoading: boolean;
+    bookIsAdding: boolean;
 }
 
 

@@ -36,7 +36,7 @@ function NavigationTabButton({value, content, onTabClick, className}: Navigation
 
 function Tabs(){
   const [booksFromDb, setBooksFromDb] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [bookIsAdding, setBookIsAdding] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
 
@@ -68,14 +68,14 @@ function Tabs(){
       publisher={book.publisher} 
       genre={book.genre} 
       status={book.status} 
-      onSwitch={(switchType:string, setLoading:Dispatch<SetStateAction<boolean>>) => handleSwitch(switchType, book.id, book.status, setLoading)} 
+      onSwitch={(switchType:string, setSwitchLoading:Dispatch<SetStateAction<boolean>>) => handleSwitch(switchType, book.id, book.status, setSwitchLoading)} 
       onDelete={() => handleDelete(book.id)}
       handleEdit={(e:React.MouseEvent<HTMLButtonElement, MouseEvent>, setShowSaveBtn:Dispatch<SetStateAction<boolean>>, setStyleSaveBtn:Dispatch<SetStateAction<boolean>>) => handleEdit(e, book.id, setShowSaveBtn, setStyleSaveBtn)}
     />
   );
 
-  async function handleSwitch(switchType:string, bookId:string, status:string, setLoading:Dispatch<SetStateAction<boolean>>){
-    setLoading(true)
+  async function handleSwitch(switchType:string, bookId:string, status:string, setSwitchLoading:Dispatch<SetStateAction<boolean>>){
+    setSwitchLoading(true)
     if(status === 'to-read'){
       status = 'reading';
     } else if(status === 'reading'){
@@ -97,11 +97,11 @@ function Tabs(){
       });
       getBooks();
       setTimeout(() => {
-        setLoading(false)
+        setSwitchLoading(false)
       }, 1000);
     } catch (error) {
       console.error(error);
-      setLoading(false)
+      setSwitchLoading(false)
     }
   }
 
@@ -187,7 +187,7 @@ function Tabs(){
   async function handleSearchClick(e:React.MouseEvent<Element, MouseEvent>){
     e.preventDefault();
     setErrorMsg('');
-    setIsLoading(true);
+    setBookIsAdding(true);
 
     const target = e.target as Element;
     const searchForm = (target as HTMLFormElement).form;
@@ -207,7 +207,7 @@ function Tabs(){
 
 
       const publisher = publisherResult.join(', ');
-      setIsLoading(false);
+      setBookIsAdding(false);
 
       function getAuthorsString(){
         return new Promise(resolve => {
@@ -246,7 +246,7 @@ function Tabs(){
     })
     .catch((err) => {
       console.log(err);
-      setIsLoading(false);
+      setBookIsAdding(false);
       setErrorMsg('Unable to fetch book data')
     });
 
@@ -272,11 +272,11 @@ function Tabs(){
         <NavigationTabButton value='my-books' className={`book-page-button ${activeTab === 'my-books' ? 'active-btn': ''}`} content='My books' onTabClick={(e) => handleTabClick(e)} />
       </nav>
 
-      {isLoading && <Spinner />}
+      {bookIsAdding && <Spinner />}
       {errorMsg && <ErrorMessage message={errorMsg} setErrorMsg={setErrorMsg}/>}
       
       {activeTab === 'add-books' ? (
-        <AddingTab handleAddClick={handleAddClick} handleSearchClick={handleSearchClick} isLoading={isLoading}></AddingTab>
+        <AddingTab handleAddClick={handleAddClick} handleSearchClick={handleSearchClick} bookIsAdding={bookIsAdding}></AddingTab>
         ) : (
         <BooksTab bookList={bookList}></BooksTab>
       )}

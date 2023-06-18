@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import Script from 'next/script'
-import { useState, MouseEventHandler, useEffect, Dispatch, SetStateAction } from 'react';
+import { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import { useSession, signIn, signOut } from "next-auth/react"
 import { getBookJson, getAuthor } from './api/openlibrary';
 import BookElement from '../components/BookElement';

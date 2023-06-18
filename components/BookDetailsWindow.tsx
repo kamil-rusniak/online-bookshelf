@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { ChangeEventHandler, Dispatch, MouseEventHandler, SetStateAction, useState } from 'react';
+import { MouseEventHandler } from 'react';
 import { BookDetailsInputProps, BookDetailsWindowProps } from '@/types/interfaces';
 
 

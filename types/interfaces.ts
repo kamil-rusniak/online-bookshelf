@@ -67,6 +67,8 @@ export interface BookDetailsWindowProps {
     setShowSaveBtn: Dispatch<SetStateAction<boolean>>;
     styleSaveBtn: boolean;
     setStyleSaveBtn: Dispatch<SetStateAction<boolean>>;
+    updatingDetailsSpinner: boolean;
+    setUpdatingDetailsSpinner: Dispatch<SetStateAction<boolean>>;
 }
 
 

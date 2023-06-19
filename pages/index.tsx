@@ -70,7 +70,8 @@ function Tabs(){
       status={book.status} 
       onSwitch={(switchType:string, setSwitchLoading:Dispatch<SetStateAction<boolean>>) => handleSwitch(switchType, book.id, book.status, setSwitchLoading)} 
       onDelete={() => handleDelete(book.id)}
-      handleEdit={(e:React.MouseEvent<HTMLButtonElement, MouseEvent>, setShowSaveBtn:Dispatch<SetStateAction<boolean>>, setStyleSaveBtn:Dispatch<SetStateAction<boolean>>) => handleEdit(e, book.id, setShowSaveBtn, setStyleSaveBtn)}
+      handleEdit={(e:React.MouseEvent<HTMLButtonElement, MouseEvent>, setShowSaveBtn:Dispatch<SetStateAction<boolean>>, setStyleSaveBtn:Dispatch<SetStateAction<boolean>>, setUpdatingDetailsSpinner:Dispatch<SetStateAction<boolean>>) =>
+         handleEdit(e, book.id, setShowSaveBtn, setStyleSaveBtn, setUpdatingDetailsSpinner)}
     />
   );
 
@@ -117,9 +118,9 @@ function Tabs(){
     }
   }
 
-  async function handleEdit(e:React.MouseEvent<HTMLButtonElement, MouseEvent>, bookId:string, setShowSaveBtn:Dispatch<SetStateAction<boolean>>, setStyleSaveBtn:Dispatch<SetStateAction<boolean>>){
+  async function handleEdit(e:React.MouseEvent<HTMLButtonElement, MouseEvent>, bookId:string, setShowSaveBtn:Dispatch<SetStateAction<boolean>>, setStyleSaveBtn:Dispatch<SetStateAction<boolean>>,  setUpdatingDetailsSpinner:Dispatch<SetStateAction<boolean>>){
     e.preventDefault();
-
+    setUpdatingDetailsSpinner(true);
     const target = e.target as Element;
     const editForm = (target as HTMLFormElement).form;
 
@@ -144,12 +145,14 @@ function Tabs(){
       setTimeout(() => {
         setShowSaveBtn(false);
       }, 100);
+      setUpdatingDetailsSpinner(false);
     } catch (error) {
       console.error(error);
       setStyleSaveBtn(false);
       setTimeout(() => {
         setShowSaveBtn(false);
       }, 100);
+      setUpdatingDetailsSpinner(false);
     }
   }
 

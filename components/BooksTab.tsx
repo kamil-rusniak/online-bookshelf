@@ -1,4 +1,4 @@
-import { MouseEventHandler, ReactElement, useState } from "react";
+import { ReactElement, useState } from "react";
 import { BooksStatusSectionProps } from "@/types/interfaces";
 
 function BooksStatusSection({sectionActiveStatus, children, section, onSectionClick, bookList}:BooksStatusSectionProps){

@@ -426,6 +426,16 @@ nav {
   align-items: center;
   position: relative;
 }
+.book-details-content .spinner {
+  position: absolute;
+  left: 50%;
+  bottom: -0.2rem;
+}
+.book-details-content .spinner .loading-circle {
+  width: 40px;
+  height: 40px;
+  border-width: 4px;
+}
 .book-details-text {
   width: 60%;
   position: relative;
@@ -626,6 +636,9 @@ footer a {
   }
   .switch-right-button {
     transform: rotate(90deg);
+  }
+  .book-details-content .spinner {
+    bottom: -1.2rem;
   }
   .book-details-text {
     width: 60%;

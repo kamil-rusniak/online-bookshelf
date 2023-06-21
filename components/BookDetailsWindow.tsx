@@ -1,6 +1,7 @@
 import Image from 'next/image';
-import { ChangeEventHandler, Dispatch, MouseEventHandler, SetStateAction, useState } from 'react';
+import { MouseEventHandler } from 'react';
 import { BookDetailsInputProps, BookDetailsWindowProps } from '@/types/interfaces';
+import Spinner from "./Spinner"
 
 
 function SaveBtn({className, handleEdit}:{className:string, handleEdit:MouseEventHandler}){
@@ -15,7 +16,7 @@ function BookDetailsInput({value, fieldType, autofocus, handleChange}:BookDetail
   )
 }
 
-export default function BookDetailsWindow({id, title, author, publisher, genre, isbn, showDetails, setShowDetails, handleEdit, showSaveBtn, setShowSaveBtn, styleSaveBtn, setStyleSaveBtn}:BookDetailsWindowProps){
+export default function BookDetailsWindow({id, title, author, publisher, genre, isbn, showDetails, setShowDetails, handleEdit, showSaveBtn, setShowSaveBtn, styleSaveBtn, setStyleSaveBtn, updatingDetailsSpinner, setUpdatingDetailsSpinner}:BookDetailsWindowProps){
 
   function showButton(){
     if (showSaveBtn === false){
@@ -84,8 +85,10 @@ export default function BookDetailsWindow({id, title, author, publisher, genre, 
             </div>
 
             {showSaveBtn && 
-             <SaveBtn className={`book-update-button ${styleSaveBtn && 'active'}`} handleEdit={(e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => handleEdit(e, setShowSaveBtn, setStyleSaveBtn)}/>
+             <SaveBtn className={`book-update-button ${styleSaveBtn && 'active'}`} handleEdit={(e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => handleEdit(e, setShowSaveBtn, setStyleSaveBtn, setUpdatingDetailsSpinner)}/>
             }
+
+            {updatingDetailsSpinner && <Spinner />}
 
           </div>
 

@@ -1,4 +1,4 @@
-import { Dispatch, MouseEventHandler, SetStateAction, useState } from "react"
+import { MouseEventHandler, useState } from "react"
 import BookDetailsWindow from "./BookDetailsWindow"
 import Spinner from "./Spinner"
 import { BookButtonsProps, BookElementProps } from "@/types/interfaces"
@@ -38,6 +38,7 @@ export default function BookElement({id, title, author, publisher, genre, isbn, 
   const [bookStatusUpdating, setBookStatusUpdating] = useState(false);
   const [showSaveBtn, setShowSaveBtn] = useState(false);
   const [styleSaveBtn, setStyleSaveBtn] = useState(false);
+  const [updatingDetailsSpinner, setUpdatingDetailsSpinner] = useState(false);
 
   function handleInfo(){
     setShowDetails(true);
@@ -72,6 +73,8 @@ export default function BookElement({id, title, author, publisher, genre, isbn, 
           setShowSaveBtn={setShowSaveBtn}
           styleSaveBtn={styleSaveBtn}
           setStyleSaveBtn={setStyleSaveBtn}
+          updatingDetailsSpinner={updatingDetailsSpinner}
+          setUpdatingDetailsSpinner={setUpdatingDetailsSpinner}
         />
       }
      </div>

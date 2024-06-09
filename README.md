@@ -3,7 +3,7 @@
 <br/>
 - Full-stack web app that lets you keep track of your books.
 <br/>
-- Built with: React, Next.js, TypeScript, Prisma, NextAuth.js, PlanetScale, SCSS, Open Library API
+- Built with: React, Next.js, TypeScript, MySQL (on Azure), Prisma, NextAuth.js, SCSS, Open Library API
 <br/>
 - Designed in Figma
 <br/>
